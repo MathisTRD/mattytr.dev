@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Mathis Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: white;
+        }
+        .redirect-container {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+    </style>
+    <script>
+        let countdown = 3;
+        
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
+            if (countdown > 0) {
+                countdown--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                window.location.href = 'src/pages/index.html';
+            }
+        }
+        
+        // Start countdown when page loads
+        window.addEventListener('load', () => {
+            updateCountdown();
+        });
+    </script>
+</head>
+<body>
+    <div class="redirect-container">
+        <h1>🚀 Portfolio Moved</h1>
+        <p>The portfolio has been restructured!<br>
+        Now with fade-out intro text and enhanced animations.</p>
+        <div class="countdown">Redirecting in <span id="countdown">3</span> seconds...</div>
+        <div style="margin-top: 2rem;">
+            <a href="src/pages/index.html" class="btn">Go to Portfolio</a>
+            <a href="src/pages/vinyl.html" class="btn">Vinyl Collection</a>
+        </div>
+    </div>
+</body>
+</html>
