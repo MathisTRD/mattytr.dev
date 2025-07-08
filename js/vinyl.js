@@ -494,7 +494,6 @@ class VinylCollection {
     
     showRecordDetails(record) {
         // This method is no longer used directly, kept for future reference
-        console.log('Record details:', record);
         // You might still implement a modal view later
     }
     

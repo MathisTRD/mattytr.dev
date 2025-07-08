@@ -1,10 +1,9 @@
-// Theme Toggle Funktionalität
+// Theme Toggle Functionality
 function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
     
-    // Prüfen ob Element existiert
     if (!themeToggle) {
-        console.error('Theme-Toggle-Button nicht gefunden!');
+        console.error('Theme toggle button not found!');
         return;
     }
     
@@ -15,27 +14,22 @@ function initThemeToggle() {
     
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateThemeIcons(currentTheme, sunIcon, moonIcon);
-    console.log('Initial theme set to:', currentTheme);
     
     themeToggle.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('Theme toggle clicked!');
         
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        console.log('Switching from', currentTheme, 'to', newTheme);
         
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcons(newTheme, sunIcon, moonIcon);
         
-        // Navbar-Hintergrund für das neue Theme anpassen
         updateNavbarBackground();
     });
 }
 
-// Hilfsfunktion für Theme Icon Updates
+// Helper function for theme icon updates
 function updateThemeIcons(theme, sunIcon, moonIcon) {
     if (theme === 'dark') {
         if (sunIcon) sunIcon.style.display = 'block';
@@ -46,7 +40,7 @@ function updateThemeIcons(theme, sunIcon, moonIcon) {
     }
 }
 
-// Navbar-Hintergrund basierend auf Theme und Scroll-Position aktualisieren
+// Update navbar background based on theme and scroll position
 function updateNavbarBackground() {
     const navbar = document.querySelector('.navbar');
     const scrolled = window.pageYOffset;
@@ -226,12 +220,11 @@ function handleContactForm(event) {
     event.preventDefault();
     
     // Add your form handling logic here
-    console.log('Contact form submitted');
     
     // Show success message
     const successMessage = document.createElement('div');
     successMessage.className = 'success-message';
-    successMessage.textContent = 'Nachricht erfolgreich gesendet!';
+    successMessage.textContent = 'Message sent successfully!';
     successMessage.style.cssText = `
         position: fixed;
         top: 20px;
@@ -376,7 +369,7 @@ class GitHubPortfolio {
             const response = await fetch(`https://api.github.com/users/${this.username}/repos?sort=${this.options.sortBy}&per_page=100`);
             
             if (!response.ok) {
-                throw new Error(`GitHub API Fehler: ${response.status}`);
+                throw new Error(`GitHub API Error: ${response.status}`);
             }
 
             const repos = await response.json();
@@ -400,7 +393,7 @@ class GitHubPortfolio {
             
             return this.projects;
         } catch (error) {
-            console.error('Fehler beim Laden der GitHub Repositories:', error);
+            console.error('Error loading GitHub repositories:', error);
             throw error;
         }
     }
@@ -442,7 +435,7 @@ class GitHubPortfolio {
             // Fallback: Use regular repos if GraphQL is not available
             return this.projects.slice(0, 3);
         } catch (error) {
-            console.warn('Pinned repositories konnten nicht geladen werden, verwende reguläre Repos');
+            console.warn('Pinned repositories could not be loaded, using regular repos');
             return this.projects.slice(0, 3);
         }
     }
@@ -524,12 +517,12 @@ class GitHubPortfolio {
                             ` : ''}
                         </div>
                     </div>
-                    <p>${repo.description || 'Keine Beschreibung verfügbar.'}</p>
+                    <p>${repo.description || 'No description available.'}</p>
                     <div class="project-tech" id="project-tech-${repo.id}">
                         ${topics.map(topic => `<span class="project-topic">${topic}</span>`).join('')}
                         <span class="languages-loading">Loading languages...</span>
                     </div>
-                    <div class="project-updated">Aktualisiert am ${updatedDate}</div>
+                    <div class="project-updated">Updated on ${updatedDate}</div>
                 </div>
             </div>
         `;
@@ -697,9 +690,9 @@ class GitHubPortfolio {
         if (this.filteredProjects.length === 0) {
             projectsGrid.innerHTML = `
                 <div class="projects-error">
-                    <h3>Keine Projekte gefunden</h3>
-                    <p>Es konnten keine GitHub Repositories geladen werden.</p>
-                    <button class="retry-btn" onclick="gitHubPortfolio.init()">Erneut versuchen</button>
+                    <h3>No Projects Found</h3>
+                    <p>No GitHub repositories could be loaded.</p>
+                    <button class="retry-btn" onclick="gitHubPortfolio.init()">Try Again</button>
                 </div>
             `;
             return;
@@ -759,9 +752,9 @@ class GitHubPortfolio {
         
         projectsGrid.innerHTML = `
             <div class="projects-error">
-                <h3>Fehler beim Laden der Projekte</h3>
-                <p>${error.message || 'Die GitHub Repositories konnten nicht geladen werden.'}</p>
-                <button class="retry-btn" onclick="gitHubPortfolio.init()">Erneut versuchen</button>
+                <h3>Error Loading Projects</h3>
+                <p>${error.message || 'Could not load GitHub repositories.'}</p>
+                <button class="retry-btn" onclick="gitHubPortfolio.init()">Try Again</button>
             </div>
         `;
         
@@ -795,11 +788,10 @@ class GitHubPortfolio {
 }
 
 // Initialize GitHub Portfolio
-// WICHTIG: Ersetzen Sie 'IHR_GITHUB_USERNAME' mit Ihrem echten GitHub Benutzernamen
 const gitHubPortfolio = new GitHubPortfolio('MathisTRD', {
-    maxRepos: 6,           // Maximale Anzahl der angezeigten Repositories
-    excludeForked: true,   // Geforkete Repositories ausschließen
-    sortBy: 'updated'      // Sortierung nach letzter Aktivität
+    maxRepos: 6,           // Maximum number of repositories to display
+    excludeForked: true,   // Exclude forked repositories
+    sortBy: 'updated'      // Sort by last activity
 });
 
 // Start loading when DOM is ready
