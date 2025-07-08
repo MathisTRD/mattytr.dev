@@ -32,6 +32,10 @@ button:focus, .nav-icon:focus, .theme-toggle:focus {
     --hover-bg: rgba(255, 255, 255, 0.1);
     --glow-color: rgba(255, 255, 255, 0.1);
     --shadow-color: rgba(0, 0, 0, 0.3);
+    --accent-color: #ffffff;
+    --accent-rgb: 255, 255, 255;
+    --accent-bg: rgba(255, 255, 255, 0.1);
+    --navbar-height: 60px; /* Added variable for navbar height */
 }
 
 /* Light Mode Variablen - Echtes helles Design */
@@ -47,6 +51,10 @@ button:focus, .nav-icon:focus, .theme-toggle:focus {
     --hover-bg: #f0f0f0;
     --glow-color: rgba(0, 0, 0, 0.08);
     --shadow-color: rgba(0, 0, 0, 0.06);
+    --accent-color: #000000;
+    --accent-rgb: 0, 0, 0;
+    --accent-bg: rgba(0, 0, 0, 0.05);
+    --navbar-height: 60px; /* Added variable for navbar height */
 }
 
 body {
@@ -67,7 +75,7 @@ body {
     background: var(--navbar-bg);
     backdrop-filter: blur(10px);
     border-radius: 50px;
-    padding: 6px 16px;
+    padding: 10px 20px; /* Increased padding for taller navbar */
     border: 1px solid var(--border-color);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 0 8px 32px var(--shadow-color);
@@ -75,25 +83,61 @@ body {
     width: auto;
 }
 
-/* Geschrumpfte Navbar - wird durch JavaScript gesteuert */
+/* --- Navbar: Perfect Center Expansion --- */
+.navbar {
+    background: rgba(17, 17, 17, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    z-index: 1000;
+    padding: 6px 16px;
+    /* Use transform for center positioning */
+    transform: translateX(-50%);
+    /* Set explicit dimensions for smooth transitions */
+    width: 280px; /* Further reduced from 340px to make it more compact */
+    height: 52px; /* Fixed height to prevent jumping */
+    /* Smooth transition */
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Collapsed navbar when scrolled */
 .navbar.scrolled {
+    /* Collapse to circular shape */
+    width: 60px;
+    height: 60px;
+    padding: 16px;
+    border-radius: 50%;
+    overflow: hidden;
+    /* Keep centered with transform */
+    transform: translateX(-50%);
+    /* Same smooth transition */
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    width: 56px !important;
-    height: 56px !important;
-    padding: 14px !important;
-    border-radius: 50% !important;
 }
 
-/* Expandierte Navbar beim Hover */
+/* Expanded navbar on hover - expand from center */
 .navbar.scrolled:hover {
-    width: 300px !important;
-    height: auto !important;
-    padding: 6px 16px !important;
-    border-radius: 50px !important;
+    /* Expand to wider shape */
+    width: 280px; /* Match the default navbar width */
+    height: 52px; /* Same height as base navbar to prevent jumping */
+    padding: 6px 16px;
+    border-radius: 50px;
+    /* Keep centered with transform */
+    transform: translateX(-50%);
+    /* Same smooth transition */
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-
+/* Prevent layout jump by reserving space for expanded navbar */
+@media (min-width: 600px) {
+  .navbar {
+    min-width: 56px;
+    min-height: 56px;
+  }
+}
 
 .nav-container {
     display: flex;
@@ -101,6 +145,7 @@ body {
     gap: 16px;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     justify-content: center;
+    height: 40px; /* Fixed height to prevent jumping */
 }
 
 /* Container bleibt flexibel für organische Animation */
@@ -109,7 +154,7 @@ body {
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 40px; /* Consistent height */
 }
 
 /* Container beim Hover expandieren */
@@ -117,7 +162,7 @@ body {
     gap: 16px;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     justify-content: center;
-    height: auto;
+    height: 40px; /* Consistent height */
 }
 
 .nav-links {
@@ -138,19 +183,22 @@ body {
     position: relative;
 }
 
+/* Nav-Links im Hover-Zustand - match gap with default state */
+.navbar.scrolled:hover .nav-links {
+    gap: 12px; /* Match the gap of the default navbar */
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
-
-/* Navigation Icons - Consistent styling without circles */
 .nav-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     color: var(--text-muted);
     text-decoration: none;
     border-radius: 0; /* Remove circular styling */
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s ease;
     position: relative;
     flex-shrink: 0;
     margin: 0;
@@ -159,6 +207,23 @@ body {
     box-shadow: none !important;
     outline: none !important;
     cursor: pointer;
+}
+
+.nav-icon.active-nav-link {
+    opacity: 1;
+    transform: scale(1.1);
+    color: var(--accent-color);
+    position: relative;
+    /* Subtle glow effect instead of background */
+    text-shadow: 0 0 5px var(--accent-color);
+    background-color: transparent !important;
+}
+
+/* Light Mode Active Nav Link */
+[data-theme="light"] .nav-icon.active-nav-link {
+    color: #000000;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    background-color: transparent !important;
 }
 
 .nav-icon:hover {
@@ -207,6 +272,16 @@ body {
     pointer-events: none;
 }
 
+/* Dark theme: Show sun, hide moon */
+[data-theme="dark"] .theme-toggle .sun-icon {
+    display: block;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+    display: none !important;
+}
+
+/* Light theme: Hide sun, show moon */
 [data-theme="light"] .theme-toggle .sun-icon {
     display: none;
 }
@@ -221,6 +296,12 @@ body {
     height: 44px !important;
     z-index: 100;
     position: relative;
+    /* Ensure consistent centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Smooth transition for all changes */
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-home svg {
@@ -257,14 +338,20 @@ body {
     border: none; /* Remove border */
     box-shadow: 0 0 20px var(--glow-color);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    opacity: 1 !important; /* Sicherstellen dass Home-Icon sichtbar bleibt */
-    transform: none !important; /* Keine Transform-Manipulation */
+    opacity: 1; /* Sicherstellen dass Home-Icon sichtbar bleibt */
+    /* Remove transform override to prevent jumping */
+    /* Center the home icon in collapsed state */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Move icon higher to true center */
+    transform: translateY(-6px);
 }
 
 .navbar.scrolled .nav-home:hover {
     background-color: var(--hover-bg);
     transform: scale(1.05);
-    transition: transform 0.3s ease; /* Nur für Hover-Effekt schneller */
+    transition: all 0.3s ease; /* Quick hover response */
 }
 
 /* Icons wieder anzeigen beim Hover */
@@ -293,9 +380,9 @@ body {
 
 /* SVG Icon Styling */
 .nav-icon svg {
-    width: 22px;
-    height: 22px;
-    stroke-width: 2.5;
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
     color: inherit;
     transition: all 0.3s ease;
 }
@@ -326,6 +413,7 @@ body {
 .hero-section {
     text-align: center;
     margin-bottom: 120px;
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .profile-image {
@@ -346,6 +434,12 @@ body {
     line-height: 1.1;
     margin-bottom: 24px;
     color: var(--text-primary);
+    transition: opacity 0.1s ease-out;
+}
+
+/* Light Mode General Text Fixes */
+[data-theme="light"] .hero-title {
+    color: var(--text-primary) !important;
 }
 
 .hero-subtitle {
@@ -353,12 +447,17 @@ body {
 }
 
 .hero-description {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
-    margin-bottom: 40px;
+    line-height: 1.6;
+    margin: 0 auto 2rem auto;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+}
+
+/* Light Mode General Text Fixes */
+[data-theme="light"] .hero-description {
+    color: var(--text-secondary) !important;
 }
 
 .hero-buttons {
@@ -416,6 +515,11 @@ body {
     text-align: center;
 }
 
+/* Light Mode General Text Fixes */
+[data-theme="light"] .section-title {
+    color: var(--text-primary) !important;
+}
+
 .about-section {
     margin-bottom: 120px;
 }
@@ -446,6 +550,11 @@ body {
     color: #cccccc;
     margin-bottom: 24px;
     line-height: 1.7;
+}
+
+/* Light Mode General Text Fixes */
+[data-theme="light"] .about-text {
+    color: var(--text-secondary) !important;
 }
 
 /* Skills Section */
@@ -485,6 +594,11 @@ body {
     color: var(--text-primary);
 }
 
+/* Light Mode General Text Fixes */
+[data-theme="light"] .skill-category h3 {
+    color: var(--text-primary) !important;
+}
+
 .skill-category ul {
     list-style: none;
 }
@@ -493,6 +607,11 @@ body {
     padding: 8px 0;
     color: var(--text-secondary);
     border-bottom: 1px solid var(--border-color);
+}
+
+/* Light Mode General Text Fixes */
+[data-theme="light"] .skill-category li {
+    color: var(--text-secondary) !important;
 }
 
 .skill-category li:last-child {
@@ -529,17 +648,22 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    transform: translateY(0);
 }
 
 .filter-btn:hover {
     color: var(--text-primary);
     background: var(--hover-bg);
+    border: 1px solid var(--text-secondary);
+    transform: translateY(-1px);
 }
 
 .filter-btn.active {
-    background: var(--text-primary);
-    color: var(--bg-primary);
-    border-color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--accent-color) !important; /* Changed from 2px to 1px to match cards */
+    box-shadow: 0 8px 20px var(--shadow-color) !important; /* Reduced shadow to match creative cards */
+    transform: translateY(-2px) !important;
 }
 
 /* Loading Animation */
@@ -626,18 +750,6 @@ body {
     opacity: 1;
 }
 
-.project-language-indicator {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
 .project-stats {
     position: absolute;
     bottom: 12px;
@@ -685,6 +797,39 @@ body {
     margin-bottom: 8px;
     color: #ffffff;
     flex: 1;
+}
+
+/* Light Mode Project Card Text Colors */
+[data-theme="light"] .project-content h3 {
+    color: #1a1a1a !important; /* Dark color for titles */
+}
+
+[data-theme="light"] .project-content p {
+    color: #4a4a4a !important; /* Dark gray for descriptions */
+}
+
+[data-theme="light"] .project-tech .project-topic {
+    background: rgba(0, 0, 0, 0.1);
+    color: #2d2d2d !important; /* Dark color for tech tags */
+}
+
+/* Project language tags keep their custom colors in light mode */
+[data-theme="light"] .project-tech .project-language {
+    border-color: transparent !important;
+    color: #ffffff !important; /* Ensure text is white for better contrast with colored backgrounds */
+    font-weight: 700 !important; /* Make text slightly bolder in light mode for better visibility */
+}
+
+[data-theme="light"] .project-updated {
+    color: #666666 !important; /* Medium gray for update text */
+}
+
+[data-theme="light"] .project-title-link {
+    color: #1a1a1a !important; /* Dark color for title links */
+}
+
+[data-theme="light"] .project-title-link:hover {
+    color: #000000 !important; /* Darker on hover */
 }
 
 .project-links {
@@ -743,12 +888,44 @@ body {
 }
 
 .project-tech span {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 500;
+    line-height: 1;
+}
+
+.project-tech .project-topic {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.project-tech .project-language {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.project-tech .project-language:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.project-tech .languages-loading {
+    font-style: italic;
+    opacity: 0.6;
+    background: none;
+    padding: 4px 0;
 }
 
 .project-updated {
@@ -884,44 +1061,47 @@ body {
 
 /* Links Container */
 .links-container {
-    max-width: 800px;
+    max-width: 500px;
     margin: 0 auto;
+    padding: 40px 0;
 }
 
-.links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    margin-top: 40px;
+.links-row {
+    margin-bottom: 40px;
 }
 
-.links-category {
-    text-align: left;
+.links-row:last-child {
+    margin-bottom: 0;
 }
 
-.links-category h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-primary);
+.links-subtitle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-align: center;
     margin-bottom: 20px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--border-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
 }
 
-.links-list {
+.links-icons {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 
-.link-item {
+.link-icon {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 16px;
     text-decoration: none;
     color: var(--text-secondary);
     transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -929,7 +1109,7 @@ body {
     overflow: hidden;
 }
 
-.link-item::before {
+.link-icon::before {
     content: '';
     position: absolute;
     top: 0;
@@ -940,48 +1120,25 @@ body {
     transition: left 0.5s ease;
 }
 
-.link-item:hover::before {
+.link-icon:hover::before {
     left: 100%;
 }
 
-.link-item:hover {
+.link-icon:hover {
     background: var(--hover-bg);
-    border-color: var(--text-muted);
+    border-color: var(--glow-color);
     color: var(--text-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--shadow-color);
-}
-
-.link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--hover-bg);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.link-item:hover .link-icon {
-    background: var(--glow-color);
-    transform: scale(1.1);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 30px var(--shadow-color);
 }
 
 .link-icon svg {
-    color: var(--text-secondary);
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-.link-item:hover .link-icon svg {
-    color: var(--text-primary);
-}
-
-.link-text {
-    font-size: 1rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
+.link-icon:hover svg {
+    color: var(--glow-color);
+    transform: scale(1.1);
 }
 
 /* Creative Section */
@@ -1035,12 +1192,12 @@ body {
     justify-content: center;
     margin: 0 auto 20px;
     color: var(--accent-color);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .creative-item:hover .creative-icon {
-    background: var(--accent-color);
-    color: white;
+    /* Background change removed */
+    color: var(--accent-color);
     transform: scale(1.1);
 }
 
@@ -1064,12 +1221,19 @@ body {
     gap: 8px;
     margin-top: 15px;
     padding: 8px 16px;
-    background: var(--accent-color);
-    color: white;
+    background: white;
+    color: black;
     text-decoration: none;
+    border: 1px solid white;
     border-radius: 20px;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.vinyl-collection-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    transform: translateY(-2px);
 }
 
 .vinyl-collection-btn svg {
@@ -1107,6 +1271,7 @@ body {
 }
 
 .creative-gallery-btn:hover svg {
+    color: inherit;
     transform: translate(2px, -2px);
 }
 
@@ -1187,13 +1352,21 @@ body {
         text-align: center;
     }
     
-    .links-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
     .links-container {
         padding: 0 20px;
+    }
+    
+    .links-icons {
+        gap: 20px;
+    }
+    
+    .link-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .links-row {
+        margin-bottom: 30px;
     }
 }
 
@@ -1219,6 +1392,29 @@ body {
     
     .section-title {
         font-size: 2rem;
+    }
+    
+    .links-icons {
+        gap: 15px;
+    }
+    
+    .link-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .link-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .links-row {
+        margin-bottom: 25px;
+    }
+    
+    .links-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 15px;
     }
 }
 
@@ -1301,14 +1497,18 @@ body {
 }
 
 [data-theme="light"] .filter-btn.active {
-    background: #e0e0e0;
-    color: var(--text-primary);
-    border-color: #d0d0d0;
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--accent-color) !important; /* Changed from 2px to 1px to match cards */
+    box-shadow: 0 8px 20px var(--shadow-color) !important; /* Reduced shadow to match creative cards */
+    transform: translateY(-2px) !important;
 }
 
 [data-theme="light"] .filter-btn:hover {
     background: #f0f0f0;
     color: var(--text-primary);
+    border: 1px solid #999999;
+    transform: translateY(-1px);
 }
 
 /* Light Mode Contact Methods */
@@ -1322,112 +1522,117 @@ body {
     border-color: #d8d8d8;
 }
 
-/* Light Mode Footer */
-[data-theme="light"] .footer {
-    background: #f5f5f5;
-    border-top: 1px solid #e8e8e8;
+/* Light Mode Vinyl Collection Button */
+[data-theme="light"] .vinyl-collection-btn {
+    background: #333333;
+    color: #ffffff;
+    border: 1px solid #333333;
 }
 
-/* Light Mode Profile Image Border */
-[data-theme="light"] .profile-image img {
-    border: 3px solid #f0f0f0;
+[data-theme="light"] .vinyl-collection-btn:hover {
+    background: #222222;
+    color: #ffffff;
 }
 
-/* Light Mode Text und Link Anpassungen */
-[data-theme="light"] .project-title-link {
-    color: #1a1a1a !important;
-    font-weight: 600;
+/* Light Mode Icon Visibility Fix */
+[data-theme="light"] .link-icon:hover svg {
+    color: #000000;
+    transform: scale(1.1);
 }
 
-[data-theme="light"] .project-title-link:hover {
-    color: #000000 !important;
-    text-decoration: underline;
+[data-theme="light"] .creative-icon {
+    color: #000000;
 }
 
-[data-theme="light"] .project-title-link:visited {
-    color: #2c2c2c !important;
+[data-theme="light"] .creative-item:hover .creative-icon {
+    color: #000000;
+    /* Background change removed */
+    transform: scale(1.1);
 }
 
-[data-theme="light"] .project-content p {
-    color: #5a5a5a;
-}
-
-[data-theme="light"] .project-content h3 {
-    color: #2c2c2c;
-}
-
-[data-theme="light"] .project-tech span {
-    background: #e8e8e8;
-    color: #4a4a4a;
-    border: 1px solid #d8d8d8;
-}
-
-[data-theme="light"] .project-updated {
-    color: #8a8a8a;
-}
-
-[data-theme="light"] .project-language-indicator {
-    color: #ffffff !important;
-    font-weight: 600;
-}
-
-[data-theme="light"] .project-link {
-    color: #5a5a5a;
-}
-
-[data-theme="light"] .project-link:hover {
-    color: #2c2c2c;
-}
-
-/* Weitere Light Mode Text-Verbesserungen */
-[data-theme="light"] .nav-icon {
-    color: #5a5a5a;
-}
-
-[data-theme="light"] .nav-icon:hover {
-    color: #2c2c2c;
-}
-
-[data-theme="light"] .section-title {
-    color: #1a1a1a;
-    font-weight: 700;
-}
-
+/* Light Mode General Text Fixes */
 [data-theme="light"] .hero-title {
-    color: #1a1a1a;
-}
-
-[data-theme="light"] .hero-subtitle {
-    color: #5a5a5a;
+    color: var(--text-primary) !important;
 }
 
 [data-theme="light"] .hero-description {
-    color: #4a4a4a;
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .section-title {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .about-text {
+    color: var(--text-secondary) !important;
 }
 
 [data-theme="light"] .skill-category h3 {
-    color: #2c2c2c;
-    font-weight: 600;
+    color: var(--text-primary) !important;
 }
 
 [data-theme="light"] .skill-category li {
-    color: #4a4a4a;
+    color: var(--text-secondary) !important;
 }
 
-[data-theme="light"] .contact-intro {
-    color: #4a4a4a;
+/* Scrolling Enhancements for Sections */
+.creative-section, 
+.projects-section, 
+.contact-section {
+    scroll-margin-top: var(--navbar-height, 60px);
+    position: relative;
 }
 
-[data-theme="light"] .footer {
-    color: #6a6a6a;
+#hero {
+    scroll-margin-top: 20px;
 }
 
-[data-theme="light"] .footer-links a {
-    color: #5a5a5a;
+/* Ensures the same level of spacing appears visually after scrolling to each section */
+.creative-section::before,
+.projects-section::before,
+.contact-section::before {
+    content: '';
+    display: block;
+    height: 20px;
+    margin-top: -20px;
+    visibility: hidden;
 }
 
-[data-theme="light"] .footer-links a:hover {
-    color: #2c2c2c;
+/* When navbar is NOT scrolled (at top) - ensure all elements are in normal state */
+.navbar:not(.scrolled) .nav-left,
+.navbar:not(.scrolled) .nav-right {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+.navbar:not(.scrolled) .nav-home {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--text-muted);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
+.navbar:not(.scrolled) .nav-container {
+    gap: 16px;
+    height: 40px; /* Consistent height to prevent jumping */
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navbar:not(.scrolled) .nav-links {
+    gap: 12px;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Invisible top anchor for home navigation */
+#top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    visibility: hidden;
+    pointer-events: none;
+}

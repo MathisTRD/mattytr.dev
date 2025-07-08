@@ -8,10 +8,13 @@ function initThemeToggle() {
         return;
     }
     
+    const sunIcon = themeToggle.querySelector('.sun-icon');
+    const moonIcon = themeToggle.querySelector('.moon-icon');
+    
     const currentTheme = localStorage.getItem('theme') || 'dark';
     
-    // Theme beim Laden setzen
     document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcons(currentTheme, sunIcon, moonIcon);
     console.log('Initial theme set to:', currentTheme);
     
     themeToggle.addEventListener('click', (e) => {
@@ -25,10 +28,22 @@ function initThemeToggle() {
         
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+        updateThemeIcons(newTheme, sunIcon, moonIcon);
         
         // Navbar-Hintergrund für das neue Theme anpassen
         updateNavbarBackground();
     });
+}
+
+// Hilfsfunktion für Theme Icon Updates
+function updateThemeIcons(theme, sunIcon, moonIcon) {
+    if (theme === 'dark') {
+        if (sunIcon) sunIcon.style.display = 'block';
+        if (moonIcon) moonIcon.style.display = 'none';
+    } else {
+        if (sunIcon) sunIcon.style.display = 'none';
+        if (moonIcon) moonIcon.style.display = 'block';
+    }
 }
 
 // Navbar-Hintergrund basierend auf Theme und Scroll-Position aktualisieren
@@ -56,16 +71,93 @@ function updateNavbarBackground() {
     }
 }
 
+// Update navbar height CSS variable
+function updateNavbarHeightVar() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        const navbarHeight = navbar.getBoundingClientRect().height;
+        document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
+    }
+}
+
+// Call on page load and window resize
+window.addEventListener('load', updateNavbarHeightVar);
+window.addEventListener('resize', updateNavbarHeightVar);
+
+// Update on scroll since navbar changes size
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    const scrolled = window.pageYOffset;
+    
+    const scrollStart = 50;
+    
+    if (scrolled > scrollStart) {
+        // Navbar schrumpft - CSS übernimmt die komplette Animation
+        navbar.classList.add('scrolled');
+        
+        // Hintergrund wird dunkler/heller basierend auf Theme
+        updateNavbarBackground();
+        
+    } else {
+        navbar.classList.remove('scrolled');
+        updateNavbarBackground();
+    }
+    
+    // Update navbar height variable when scrolling changes its size
+    updateNavbarHeightVar();
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            let offset;
+            // Get navbar height for dynamic offset calculation
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 0;
+            
+            // Spezifische Offsets für verschiedene Sektionen
+            switch (targetId) {
+                case '#creative':
+                    offset = navbarHeight + 40; // Dynamic calculation based on navbar height
+                    break;
+                case '#projects':
+                    offset = navbarHeight + 40; // Matching creative section
+                    break;
+                case '#contact':
+                    offset = navbarHeight + 20; // Slightly less offset for contact
+                    break;
+                case '#hero':
+                    offset = 0; // Go to the very top for hero section
+                    break;
+                case '#top':
+                    offset = 0; // Go to the absolute top of the page
+                    break;
+                default:
+                    offset = navbarHeight + 20; // Default dynamic offset
+            }
+            
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
             });
+            
+            // Update active state in navigation
+            document.querySelectorAll('.nav-icon').forEach(navLink => {
+                navLink.classList.remove('active-nav-link');
+            });
+            
+            // Only add active class if this is a nav-icon, not other links
+            if (this.classList.contains('nav-icon')) {
+                this.classList.add('active-nav-link');
+            }
         }
     });
 });
@@ -175,14 +267,29 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Parallax effect for hero section (subtle)
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroSection = document.querySelector('.hero-section');
-    const parallaxSpeed = 0.5;
+// Fade-out effect for hero description on scroll
+function initHeroFadeOut() {
+    const heroDescription = document.querySelector('.hero-description');
+    const heroTitle = document.querySelector('.hero-title');
     
-    heroSection.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-});
+    if (!heroDescription || !heroTitle) return;
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const heroHeight = window.innerHeight;
+        
+        // Calculate fade progress (0 = not faded, 1 = completely faded)
+        const fadeProgress = Math.min(scrolled / (heroHeight * 0.5), 1);
+        
+        // Apply fade-out to description
+        heroDescription.style.opacity = 1 - fadeProgress;
+        heroDescription.style.transform = `translateY(${fadeProgress * 30}px)`;
+        
+        // Optional: Also fade title but slower
+        const titleFadeProgress = Math.min(scrolled / (heroHeight * 0.8), 1);
+        heroTitle.style.opacity = 1 - (titleFadeProgress * 0.3); // Only fade to 70% opacity
+    });
+}
 
 // Add loading animation
 window.addEventListener('load', () => {
@@ -340,26 +447,50 @@ class GitHubPortfolio {
         }
     }
 
+    // Fetch all languages for a repository
+    async fetchLanguages(repo) {
+        if (!repo.languages_url) return null;
+        
+        try {
+            const response = await fetch(repo.languages_url);
+            if (!response.ok) {
+                throw new Error(`GitHub API Error: ${response.status}`);
+            }
+            
+            const languages = await response.json();
+            return languages;
+        } catch (error) {
+            console.error('Error fetching languages:', error);
+            return null;
+        }
+    }
+    
+    // Sort languages by usage (bytes)
+    sortLanguagesByUsage(languages) {
+        if (!languages) return [];
+        
+        return Object.entries(languages)
+            .sort((a, b) => b[1] - a[1])
+            .map(entry => entry[0]);
+    }
+    
     generateProjectCard(repo) {
         const updatedDate = new Date(repo.updated_at).toLocaleDateString('de-DE');
-        const language = repo.language || 'Unknown';
-        const languageColor = this.getLanguageColor(language);
         
+        // Extract topics
         const topics = repo.topics ? repo.topics.slice(0, 3) : [];
         
-        // Generate project image URL - prioritize different sources
+        // Generate project image URL
         const projectImageUrl = this.getProjectImageUrl(repo);
         
+        // We'll inject the languages later after fetching them
         return `
-            <div class="project-card" data-language="${language.toLowerCase()}" data-stars="${repo.stargazers_count}">
+            <div class="project-card" data-stars="${repo.stargazers_count}" data-repo-id="${repo.id}">
                 <div class="project-image">
                     ${projectImageUrl ? `
                         <img src="${projectImageUrl}" alt="${repo.name} Screenshot" loading="lazy" onerror="this.style.display='none';">
                     ` : ''}
                     <div class="project-image-overlay"></div>
-                    <div class="project-language-indicator" style="background-color: ${languageColor}">
-                        ${language}
-                    </div>
                     <div class="project-stats">
                         <div class="project-stat">
                             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
@@ -394,9 +525,9 @@ class GitHubPortfolio {
                         </div>
                     </div>
                     <p>${repo.description || 'Keine Beschreibung verfügbar.'}</p>
-                    <div class="project-tech">
-                        ${topics.map(topic => `<span>${topic}</span>`).join('')}
-                        ${language && language !== 'Unknown' ? `<span>${language}</span>` : ''}
+                    <div class="project-tech" id="project-tech-${repo.id}">
+                        ${topics.map(topic => `<span class="project-topic">${topic}</span>`).join('')}
+                        <span class="languages-loading">Loading languages...</span>
                     </div>
                     <div class="project-updated">Aktualisiert am ${updatedDate}</div>
                 </div>
@@ -406,25 +537,132 @@ class GitHubPortfolio {
 
     getLanguageColor(language) {
         const colors = {
+            // Programming Languages
             'JavaScript': '#f1e05a',
             'TypeScript': '#2b7489',
             'Python': '#3572A5',
             'Java': '#b07219',
             'C++': '#f34b7d',
             'C#': '#239120',
+            'C': '#555555',
             'PHP': '#4F5D95',
             'Ruby': '#701516',
             'Go': '#00ADD8',
             'Rust': '#dea584',
             'Swift': '#ffac45',
             'Kotlin': '#F18E33',
+            'Dart': '#00B4AB',
+            'Scala': '#c22d40',
+            'Objective-C': '#438eff',
+            'R': '#198CE7',
+            'Perl': '#0298c3',
+            'Haskell': '#5e5086',
+            'Elixir': '#6e4a7e',
+            'Clojure': '#db5855',
+            'Lua': '#000080',
+            'Julia': '#a270ba',
+            'PowerShell': '#012456',
+            'Shell': '#89e051',
+            'Bash': '#4eaa25',
+            
+            // Frontend Languages & Frameworks
             'HTML': '#e34c26',
-            'CSS': '#1572B6',
+            'CSS': '#563d7c',
+            'SCSS': '#c6538c',
+            'Less': '#1d365d',
             'Vue': '#4FC08D',
             'React': '#61DAFB',
-            'Angular': '#DD0031'
+            'Angular': '#DD0031',
+            'Svelte': '#ff3e00',
+            'Ember': '#e04e39',
+            
+            // Build Tools & Config
+            'Makefile': '#427819',
+            'CMake': '#da3434',
+            'YAML': '#cb171e',
+            'Dockerfile': '#384d54',
+            'Gradle': '#02303a',
+            
+            // Documentation
+            'Markdown': '#083fa1',
+            'reStructuredText': '#141414',
+            'AsciiDoc': '#73a0c5',
+            
+            // Data
+            'JSON': '#292929',
+            'XML': '#0060ac',
+            'CSV': '#237346',
+            'TOML': '#9c4221',
+            
+            // Others
+            'Unknown': '#586069'
         };
         return colors[language] || '#586069';
+    }
+
+    getLanguageSymbol(language) {
+        const symbols = {
+            // Programming Languages
+            'JavaScript': 'JS',
+            'TypeScript': 'TS',
+            'Python': 'PY',
+            'Java': 'JV',
+            'C++': 'C++',
+            'C#': 'C#',
+            'C': 'C',
+            'PHP': 'PHP',
+            'Ruby': 'RB',
+            'Go': 'GO',
+            'Rust': 'RS',
+            'Swift': 'SW',
+            'Kotlin': 'KT',
+            'Dart': 'DT',
+            'Scala': 'SC',
+            'Objective-C': 'OC',
+            'R': 'R',
+            'Perl': 'PL',
+            'Haskell': 'HS',
+            'Elixir': 'EX',
+            'Clojure': 'CJ',
+            'Lua': 'LUA',
+            'Julia': 'JL',
+            'PowerShell': 'PS',
+            'Shell': 'SH',
+            'Bash': 'SH',
+            
+            // Frontend Languages & Frameworks
+            'HTML': 'HTML',
+            'CSS': 'CSS',
+            'SCSS': 'SCSS',
+            'Less': 'LESS',
+            'Vue': 'VUE',
+            'React': 'REACT',
+            'Angular': 'NG',
+            'Svelte': 'SV',
+            'Ember': 'EM',
+            
+            // Build Tools & Config
+            'Makefile': 'MK',
+            'CMake': 'CM',
+            'YAML': 'YML',
+            'Dockerfile': 'DOC',
+            'Gradle': 'GR',
+            
+            // Documentation
+            'Markdown': 'MD',
+            'reStructuredText': 'RST',
+            'AsciiDoc': 'ADC',
+            
+            // Data
+            'JSON': 'JSON',
+            'XML': 'XML',
+            'CSV': 'CSV',
+            'TOML': 'TOML',
+            
+            // Others
+            'Unknown': '?'
+        };
+        return symbols[language] || '?';
     }
 
     getProjectImageUrl(repo) {
@@ -452,7 +690,7 @@ class GitHubPortfolio {
         this.renderProjects();
     }
 
-    renderProjects() {
+    async renderProjects() {
         const projectsGrid = document.getElementById('projects-grid');
         const projectsLoading = document.getElementById('projects-loading');
         
@@ -473,6 +711,46 @@ class GitHubPortfolio {
         
         projectsGrid.innerHTML = projectsHTML;
         projectsLoading.classList.add('hidden');
+        
+        // After rendering, fetch and update languages for each project
+        for (const repo of this.filteredProjects) {
+            this.updateProjectLanguages(repo);
+        }
+    }
+    
+    async updateProjectLanguages(repo) {
+        const techContainer = document.getElementById(`project-tech-${repo.id}`);
+        if (!techContainer) return;
+        
+        const languages = await this.fetchLanguages(repo);
+        
+        if (languages && Object.keys(languages).length > 0) {
+            // Sort languages by usage
+            const sortedLanguages = this.sortLanguagesByUsage(languages);
+            
+            // Create HTML for language tags with symbols instead of text
+            const languagesHTML = sortedLanguages.map(language => {
+                const color = this.getLanguageColor(language);
+                const symbol = this.getLanguageSymbol(language);
+                const percentage = Math.round((languages[language] / Object.values(languages).reduce((a, b) => a + b, 0)) * 100);
+                return `<span class="project-language" style="background-color: ${color}70; color: var(--text-color); border: 1px solid ${color};" title="${language}${percentage > 5 ? ` (${percentage}%)` : ''}">${symbol}</span>`;
+            }).join('');
+            
+            // Remove loading indicator
+            const loadingIndicator = techContainer.querySelector('.languages-loading');
+            if (loadingIndicator) {
+                loadingIndicator.remove();
+            }
+            
+            // Add languages to the container
+            techContainer.insertAdjacentHTML('beforeend', languagesHTML);
+        } else {
+            // Handle case when languages can't be fetched
+            const loadingIndicator = techContainer.querySelector('.languages-loading');
+            if (loadingIndicator) {
+                loadingIndicator.textContent = '';
+            }
+        }
     }
 
     renderError(error) {
@@ -529,8 +807,158 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize theme toggle
     initThemeToggle();
     
+    // Initialize hero fade-out effect
+    initHeroFadeOut();
+    
     // Initialize GitHub portfolio if element exists
     if (document.getElementById('projects-grid')) {
         gitHubPortfolio.init();
     }
+    
+    // Setup section observer for active nav links
+    setupSectionObserver();
+    
+    // Update navbar height variable
+    updateNavbarHeightVar();
+    
+    // Ensure smooth scrolling works after DOM is loaded
+    setTimeout(() => {
+        // Re-attach event listeners to make sure they work
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // Remove any existing listeners
+            const newAnchor = anchor.cloneNode(true);
+            anchor.parentNode.replaceChild(newAnchor, anchor);
+            
+            // Add fresh event listener
+            newAnchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
+                if (target) {
+                    let offset;
+                    // Get navbar height for dynamic offset calculation
+                    const navbar = document.querySelector('.navbar');
+                    const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 0;
+                    
+                    // Spezifische Offsets für verschiedene Sektionen
+                    switch (targetId) {
+                        case '#creative':
+                            offset = navbarHeight + 40; // Dynamic calculation based on navbar height
+                            break;
+                        case '#projects':
+                            offset = navbarHeight + 40; // Matching creative section
+                            break;
+                        case '#contact':
+                            offset = navbarHeight + 20; // Slightly less offset for contact
+                            break;
+                        case '#hero':
+                            offset = 0; // Go to the very top for hero section
+                            break;
+                        case '#top':
+                            offset = 0; // Go to the absolute top of the page
+                            break;
+                        default:
+                            offset = navbarHeight + 20; // Default dynamic offset
+                    }
+                    
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active state in navigation
+                    document.querySelectorAll('.nav-icon').forEach(navLink => {
+                        navLink.classList.remove('active-nav-link');
+                    });
+                    
+                    // Only add active class if this is a nav-icon, not other links
+                    if (this.classList.contains('nav-icon')) {
+                        this.classList.add('active-nav-link');
+                    }
+                }
+            });
+        });
+    }, 100);
 });
+
+// Observer for section visibility to update active nav links
+function setupSectionObserver() {
+    const sections = document.querySelectorAll('section, #hero');
+    const navLinks = {};
+    
+    // Create a map of section IDs to nav links
+    document.querySelectorAll('.nav-icon[href^="#"]').forEach(link => {
+        const targetId = link.getAttribute('href');
+        navLinks[targetId] = link;
+    });
+    
+    // Function to update active nav link based on scroll position
+    function updateActiveNavLink() {
+        // Get current scroll position
+        const scrollPosition = window.scrollY + 100; // Offset for navbar
+        
+        // Find the section that is currently in view
+        let activeSection = null;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionBottom = sectionTop + sectionHeight;
+            
+            // Check if this section is currently in view
+            if (scrollPosition >= sectionTop - 200 && scrollPosition < sectionBottom - 100) {
+                activeSection = section;
+            }
+        });
+        
+        // If no section is clearly active, check for the closest one
+        if (!activeSection) {
+            let closestDistance = Infinity;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const distance = Math.abs(scrollPosition - sectionTop);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    activeSection = section;
+                }
+            });
+        }
+        
+        if (activeSection) {
+            const id = '#' + activeSection.id;
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-icon').forEach(link => {
+                link.classList.remove('active-nav-link');
+            });
+            
+            // Add active class to the corresponding nav link
+            if (navLinks[id]) {
+                navLinks[id].classList.add('active-nav-link');
+            }
+        }
+    }
+    
+    // Throttle function to limit how often updateActiveNavLink is called
+    let throttleTimer = null;
+    function throttledUpdate() {
+        if (throttleTimer) return;
+        throttleTimer = setTimeout(() => {
+            updateActiveNavLink();
+            throttleTimer = null;
+        }, 100);
+    }
+    
+    // Update on scroll with throttling
+    window.addEventListener('scroll', throttledUpdate);
+    
+    // Update on page load
+    setTimeout(updateActiveNavLink, 500); // Delay to ensure page is loaded
+}
+
+// Call the setup function when the DOM is loaded
+document.addEventListener('DOMContentLoaded', setupSectionObserver);

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Collection - Mathis</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/vinyl.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <!-- Zurück Link -->
+                <a href="index.html" class="nav-icon nav-left" title="Back to Portfolio">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                
+                 <!-- Home Icon - immer in der Mitte -->
+                <a href="index.html#hero" class="nav-icon nav-home" title="Home">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 12H5V22H9V16H15V22H19V12H22L12 2Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="nav-icon nav-right theme-toggle" title="Dark/Light Mode">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                        <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="vinyl-main">
+        <div class="vinyl-hero">
+            <div class="vinyl-icon">
+                <a href="https://www.discogs.com/user/MathisTRD" target="_blank" title="View my Discogs profile" class="vinyl-icon-link">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Turntable vinyl design based on reference image -->
+                        <g>
+                            <!-- Vinyl disc - this part will spin -->
+                            <g class="vinyl-disc">
+                                <!-- Main record outline -->
+                                <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="3" fill="none"/>
+                                
+                                <!-- Left side single groove -->
+                                <path d="M22 15C16 18 11 25 10 32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                
+                                <!-- Center label circle -->
+                                <circle cx="40" cy="40" r="12" stroke="currentColor" stroke-width="3" fill="none"/>
+                                
+                                <!-- Center hole -->
+                                <rect x="37.5" y="37.5" width="5" height="5" fill="currentColor"/>
+                            </g>
+                            
+                            <!-- Tonearm -->
+                            <g>
+                                <!-- Create a straight tonearm that touches the lower part of the disc, vertically centered -->
+                                <path d="M5 70L40 65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Stylus cartridge (Tonabnehmer) as triangle -->
+                                <polygon points="40,65 44,63 42,69" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <h1 class="vinyl-title">
+                <a href="https://www.discogs.com/user/MathisTRD/collection" target="_blank" title="View my Discogs profile">My Vinyl Collection</a>
+            </h1>
+        </div>
+
+        <!-- Collection Stats -->
+        <div class="collection-stats">
+            <div class="stat-item">
+                <span class="stat-number" id="total-albums">-</span>
+                <span class="stat-label">Total Albums</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="newest-year">-</span>
+                <span class="stat-label">Newest Release</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="oldest-year">-</span>
+                <span class="stat-label">Oldest Release</span>
+            </div>
+        </div>
+
+        <!-- Filter and Search -->
+        <div class="vinyl-controls">
+            <div class="search-container">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="text" id="vinyl-search" placeholder="Search collection...">
+            </div>
+            
+            <div class="filter-controls">
+                <select id="genre-filter">
+                    <option value="">All Genres</option>
+                </select>
+                <select id="year-filter">
+                    <option value="">All Years</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="artist">Sort by Artist</option>
+                    <option value="title">Sort by Title</option>
+                    <option value="year">Sort by Year</option>
+                    <option value="date_added">Sort by Date Added</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="vinyl-loading" id="vinyl-loading">
+            <div class="loading-vinyl">
+                <svg width="60" height="60" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Turntable vinyl design that matches the hero section -->
+                    <g class="vinyl-disc">
+                        <!-- Main record outline -->
+                        <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="3" fill="none"/>
+                        
+                        <!-- Left side single groove -->
+                        <path d="M22 15C16 18 11 25 10 32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <!-- Center label circle -->
+                        <circle cx="40" cy="40" r="12" stroke="currentColor" stroke-width="3" fill="none"/>
+                        
+                        <!-- Center hole -->
+                        <rect x="37.5" y="37.5" width="5" height="5" fill="currentColor"/>
+                    </g>
+                </svg>
+            </div>
+            <p>Loading your vinyl collection from Discogs...</p>
+        </div>
+
+        <!-- Error State -->
+        <div class="vinyl-error" id="vinyl-error" style="display: none;">
+            <div class="error-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
+                    <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+            <h3>Failed to load collection</h3>
+            <p>Please check your Discogs settings or try again later.</p>
+            <button onclick="loadVinylCollection()">Retry</button>
+        </div>
+
+        <!-- Vinyl Grid -->
+        <div class="vinyl-grid" id="vinyl-grid">
+            <!-- Vinyl records will be loaded here -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination" style="display: none;">
+            <button id="prev-page" disabled>Previous</button>
+            <span id="page-info">Page 1 of 1</span>
+            <button id="next-page" disabled>Next</button>
+        </div>
+
+        <!-- Setup Instructions -->
+        <div class="setup-instructions" id="setup-instructions">
+            <h3>🎵 How to connect your Discogs collection:</h3>
+            <ol>
+                <li>Make sure your Discogs collection is set to <strong>public</strong></li>
+                <li>Get your Discogs username from your profile URL</li>
+                <li>Update the username in the <code>vinyl.js</code> file</li>
+                <li>Optional: Get a Discogs API token for higher rate limits</li>
+            </ol>
+            <p>Once configured, your entire collection will be displayed here with cover art, release information, and estimated values!</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Mathis. Alle Rechte vorbehalten.</p>
+            <div class="footer-links">
+                <a href="index.html">Back to Portfolio</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/vinyl.js"></script>
+</body>
+</html>

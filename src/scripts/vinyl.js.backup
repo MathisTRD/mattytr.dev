@@ -133,15 +133,22 @@ class VinylCollection {
         const yearFilter = document.getElementById('year-filter');
         
         if (genreFilter && yearFilter) {
-            // Extract unique genres and years
-            const genres = new Set();
+            // Extract unique genres/styles and years
+            const genresAndStyles = new Set();
             const years = new Set();
             
             this.allRecords.forEach(record => {
                 const release = record.basic_information;
-                if (release.genres) {
-                    release.genres.forEach(genre => genres.add(genre));
+                
+                // Collect all genres and styles that are actually present in the collection
+                if (release.styles && release.styles.length > 0) {
+                    release.styles.forEach(style => genresAndStyles.add(style));
                 }
+                
+                if (release.genres && release.genres.length > 0) {
+                    release.genres.forEach(genre => genresAndStyles.add(genre));
+                }
+                
                 if (release.year) {
                     years.add(release.year);
                 }
@@ -149,7 +156,7 @@ class VinylCollection {
             
             // Populate genre filter
             genreFilter.innerHTML = '<option value="">All Genres</option>';
-            Array.from(genres).sort().forEach(genre => {
+            Array.from(genresAndStyles).sort().forEach(genre => {
                 const option = document.createElement('option');
                 option.value = genre;
                 option.textContent = genre;
@@ -215,11 +222,16 @@ class VinylCollection {
         
         let filtered = [...this.filteredRecords];
         
-        // Apply genre filter
+        // Apply genre/style filter
         if (genreFilter && genreFilter.value) {
+            const selectedGenre = genreFilter.value.toLowerCase();
             filtered = filtered.filter(record => {
-                const genres = record.basic_information.genres || [];
-                return genres.includes(genreFilter.value);
+                const release = record.basic_information;
+                const styles = (release.styles || []).map(style => style.toLowerCase());
+                const genres = (release.genres || []).map(genre => genre.toLowerCase());
+                
+                // Check if the selected value exists in either styles or genres
+                return styles.includes(selectedGenre) || genres.includes(selectedGenre);
             });
         }
         
@@ -300,42 +312,113 @@ class VinylCollection {
         const artist = release.artists?.[0]?.name || 'Unknown Artist';
         const title = release.title || 'Unknown Title';
         const year = release.year || '';
-        const format = release.formats?.[0]?.name || 'Vinyl';
+        
+        // Get genre information - prioritize styles over genres
+        const styles = release.styles || [];
+        const genres = release.genres || [];
+        let genreDisplay = '';
+        
+        if (styles.length > 0) {
+            genreDisplay = styles[0]; // Use the first style
+        } else if (genres.length > 0) {
+            genreDisplay = genres[0]; // Fallback to first genre if no styles
+        }
+        
+        // Get detailed format information and standardize it
+        let formatInfo = '';
+        if (release.formats && release.formats.length > 0) {
+            const format = release.formats[0];
+            const descriptions = format.descriptions || [];
+            
+            // Get format type (Album, LP, etc.)
+            let formatType = '';
+            if (descriptions.includes('Album')) {
+                formatType = 'Album';
+            } else if (descriptions.includes('LP')) {
+                formatType = 'LP';
+            } else if (descriptions.includes('Single')) {
+                formatType = 'Single';
+            } else if (descriptions.includes('EP')) {
+                formatType = 'EP';
+            } else if (format.name) {
+                // If none of the above, use the format name
+                formatType = format.name;
+            }
+            
+            // Get record size (12", 7", etc.)
+            let recordSize = '';
+            if (descriptions.includes('12"')) {
+                recordSize = '12"';
+            } else if (descriptions.includes('7"')) {
+                recordSize = '7"';
+            } else if (descriptions.includes('10"')) {
+                recordSize = '10"';
+            }
+            
+            // Combine format type and record size
+            if (formatType && recordSize) {
+                formatInfo = `${formatType} ${recordSize}`;
+            } else {
+                formatInfo = formatType || recordSize;
+            }
+        }
+        
+        // Create Discogs URLs
+        const releaseUrl = `https://www.discogs.com/release/${record.id}`;
+        const artistId = release.artists?.[0]?.id;
+        const artistUrl = artistId ? `https://www.discogs.com/artist/${artistId}` : '#';
         
         card.innerHTML = `
             <div class="vinyl-cover">
-                ${imageUrl ? 
-                    `<img src="${imageUrl}" alt="${title} by ${artist}" loading="lazy">` :
-                    `<div class="vinyl-placeholder">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                        </svg>
-                    </div>`
-                }
+                <a href="${releaseUrl}" target="_blank" title="View on Discogs: ${title}">
+                    ${imageUrl ? 
+                        `<img src="${imageUrl}" alt="${title} by ${artist}" loading="lazy">` :
+                        `<div class="vinyl-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                            </svg>
+                        </div>`
+                    }
+                </a>
             </div>
             <div class="vinyl-info">
-                <div class="vinyl-artist">${artist}</div>
-                <div class="vinyl-title-text">${title}</div>
+                <a href="${artistUrl}" class="vinyl-artist" target="_blank" title="View artist on Discogs">${artist}</a>
+                <a href="${releaseUrl}" class="vinyl-title-text" target="_blank" title="View on Discogs: ${title}">${title}</a>
                 ${year ? `<div class="vinyl-year">${year}</div>` : ''}
-                <div class="vinyl-details">
-                    <span class="vinyl-format">${format}</span>
+                <div class="vinyl-meta">
+                    ${genreDisplay ? `<span class="vinyl-genre">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        ${genreDisplay}
+                    </span>` : ''}
+                    ${formatInfo ? `<span class="vinyl-format">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                        </svg>
+                        ${formatInfo}
+                    </span>` : ''}
                 </div>
             </div>
         `;
         
-        // Add click handler for future modal/detail view
-        card.addEventListener('click', () => {
-            this.showRecordDetails(record);
-        });
+        return card;
+    }
+        
+        // No need for the card click handler anymore since we have direct links
+        // Each element (artist, title, cover) now has its own link
         
         return card;
     }
     
     showRecordDetails(record) {
-        // Placeholder for future modal implementation
+        // This method is no longer used directly, kept for future reference
         console.log('Record details:', record);
-        // You can implement a modal or redirect to detail page here
+        // You might still implement a modal view later
     }
     
     setupPagination() {
