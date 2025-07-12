@@ -953,19 +953,39 @@ body {
 }
 
 .retry-btn {
-    background: #ffffff;
-    color: #000000;
+    color: #fff;
+    background: linear-gradient(90deg, #e53e3e 0%, #ff6b6b 100%);
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    padding: 0.7em 1.6em;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.8em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 24px rgba(229, 62, 62, 0.25);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+    letter-spacing: 0.5px;
+}
+
+body[data-theme="dark"] .retry-btn {
+    color: #fff;
+    background: linear-gradient(90deg, #e53e3e 0%, #ff6b6b 100%);
+    border: none;
+    box-shadow: 0 4px 24px rgba(229, 62, 62, 0.35);
+}
+
+body[data-theme="light"] .retry-btn {
+    color: #fff;
+    background: linear-gradient(90deg, #e53e3e 0%, #ff6b6b 100%);
+    border: none;
+    box-shadow: 0 4px 24px rgba(229, 62, 62, 0.18);
 }
 
 .retry-btn:hover {
-    background: #f0f0f0;
+    background: linear-gradient(90deg, #ff6b6b 0%, #e53e3e 100%);
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(229, 62, 62, 0.45);
+    transform: translateY(-2px) scale(1.07);
 }
 
 /* Project Card Animations */
