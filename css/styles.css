@@ -6,14 +6,14 @@
 }
 
 /* Explicit button reset to remove all default browser styling */
-button:not(.retry-btn), .nav-icon, .theme-toggle {
+button, .nav-icon, .theme-toggle {
     border: none !important;
     background: none !important;
     box-shadow: none !important;
     outline: none !important;
 }
 
-button:not(.retry-btn):focus, .nav-icon:focus, .theme-toggle:focus {
+button:focus, .nav-icon:focus, .theme-toggle:focus {
     outline: none !important;
     box-shadow: none !important;
     border: none !important;
@@ -36,11 +36,6 @@ button:not(.retry-btn):focus, .nav-icon:focus, .theme-toggle:focus {
     --accent-rgb: 255, 255, 255;
     --accent-bg: rgba(255, 255, 255, 0.1);
     --navbar-height: 60px; /* Added variable for navbar height */
-    --button-bg: var(--accent-bg);
-    --button-text: var(--accent-color);
-    --button-border: var(--accent-color);
-    --button-hover-bg: var(--hover-bg);
-    --button-hover-border: var(--accent-color);
 }
 
 /* Light Mode Variables - Clean Bright Design */
@@ -60,11 +55,6 @@ button:not(.retry-btn):focus, .nav-icon:focus, .theme-toggle:focus {
     --accent-rgb: 0, 0, 0;
     --accent-bg: rgba(0, 0, 0, 0.05);
     --navbar-height: 60px; /* Added variable for navbar height */
-    --button-bg: var(--accent-bg);
-    --button-text: var(--accent-color);
-    --button-border: var(--accent-color);
-    --button-hover-bg: var(--hover-bg);
-    --button-hover-border: var(--accent-color);
 }
 
 body {
@@ -676,6 +666,7 @@ body {
     transform: translateY(-2px) !important;
 }
 
+
 /* Loading Animation */
 .projects-loading {
     display: flex;
@@ -962,25 +953,19 @@ body {
 }
 
 .retry-btn {
-    background: var(--button-bg, #4a90e2) !important;
-    color: var(--button-text, #ffffff) !important;
-    border: 2px solid var(--button-border, #4a90e2) !important;
-    padding: 12px 24px !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    display: inline-block !important;
-    margin-top: 10px !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .retry-btn:hover {
-    background: var(--button-hover-bg, #357abd) !important;
-    border-color: var(--button-hover-border, #357abd) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+    background: #f0f0f0;
 }
 
 /* Project Card Animations */
@@ -1108,7 +1093,10 @@ body {
     gap: 25px;
     flex-wrap: wrap;
 }
+/* Base Link Icon Styles */
 
+
+/* Base Link Icon Styles */
 .link-icon {
     display: flex;
     align-items: center;
@@ -1125,6 +1113,7 @@ body {
     overflow: hidden;
 }
 
+/* Hover Shine Effect */
 .link-icon::before {
     content: '';
     position: absolute;
@@ -1140,6 +1129,7 @@ body {
     left: 100%;
 }
 
+/* Hover State */
 .link-icon:hover {
     background: var(--hover-bg);
     border-color: var(--glow-color);
@@ -1148,14 +1138,26 @@ body {
     box-shadow: 0 10px 30px var(--shadow-color);
 }
 
+/* SVG Transitions and Color Inheritance */
 .link-icon svg {
     transition: all 0.3s ease;
+    color: var(--text-primary); /* Ensure all SVGs use primary text color */
+}
+
+/* Steam Icon Fix - Force color inheritance */
+.link-icon svg path {
+    stroke: currentColor;
+    fill: none;
 }
 
 .link-icon:hover svg {
     color: var(--glow-color);
     transform: scale(1.1);
 }
+
+/* Entfernt - Steam Icon verwendet jetzt die Standard .link-icon Styles */
+
+
 
 /* Creative Section */
 .creative-section {
@@ -1388,18 +1390,27 @@ body {
 
 @media (max-width: 480px) {
     .navbar {
-        left: 10px;
-        right: 10px;
-        transform: none;
-        width: calc(100% - 20px);
-        max-width: none;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        width: 52px !important;
+        max-width: none !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     }
-    
     .navbar.scrolled {
-        transform: translateX(-50%) scale(0.9);
-        width: 52px;
-        left: 50%;
-        right: auto;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) scale(0.9) !important;
+        width: 52px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     }
     
     .main-content {
@@ -2223,4 +2234,22 @@ body {
         width: 100%;
         max-width: 200px;
     }
+}
+
+/* Mobile Home Icon Centering Fix - Improved */
+@media (max-width: 600px) {
+  .nav-links {
+    justify-content: center !important;
+  }
+  .nav-home {
+    margin: 0 !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    top: 0 !important;
+  }
 }

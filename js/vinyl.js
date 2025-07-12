@@ -3,8 +3,8 @@
 
 class VinylCollection {
     constructor() {
-        this.username = 'MathisTRD'; // Replace with your Discogs username
-        this.token = ''; // Optional: Your Discogs API token for higher rate limits
+        this.username = 'MathisTRD'; 
+        this.token = ''; 
         this.baseUrl = 'https://api.discogs.com';
         this.currentPage = 1;
         this.itemsPerPage = 50;
