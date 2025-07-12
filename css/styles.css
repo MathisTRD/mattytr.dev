@@ -1093,8 +1093,6 @@ body {
     gap: 25px;
     flex-wrap: wrap;
 }
-/* Base Link Icon Styles */
-
 
 /* Base Link Icon Styles */
 .link-icon {
@@ -1156,8 +1154,6 @@ body {
 }
 
 /* Entfernt - Steam Icon verwendet jetzt die Standard .link-icon Styles */
-
-
 
 /* Creative Section */
 .creative-section {
