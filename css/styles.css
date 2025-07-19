@@ -78,7 +78,7 @@ body {
     padding: 10px 20px; /* Increased padding for taller navbar */
     border: 1px solid var(--border-color);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 8px 32px var(--shadow-color);
+    box-shadow: 0 8px 32px var(--shadow-color); 
     max-width: 420px;
     width: auto;
 }
