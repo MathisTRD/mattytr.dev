@@ -17,8 +17,6 @@ function initThemeToggle() {
         localStorage.setItem('theme', newTheme);
         updateThemeIcons(newTheme, sunIcon, moonIcon);
         updateNavbarBackground();
-        themeToggle.classList.add('pulse');
-        setTimeout(() => themeToggle.classList.remove('pulse'), 500);
     });
 }
 
