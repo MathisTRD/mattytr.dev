@@ -4,29 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Mathis</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="icon" type="image/x-icon" href="public/assets/icons/favicon.png">
 </head>
 <body>
+    <!-- Starfield Background -->
+    <div class="starfield">
+        <svg class="star star-1" viewBox="0 0 4 4">
+            <circle cx="2" cy="2" r="0.5" fill="white" opacity="0.8"/>
+        </svg>
+        <svg class="star star-2" viewBox="0 0 6 6">
+            <circle cx="3" cy="3" r="0.8" fill="white" opacity="0.6"/>
+        </svg>
+        <svg class="star star-3" viewBox="0 0 4 4">
+            <circle cx="2" cy="2" r="0.3" fill="white" opacity="0.9"/>
+        </svg>
+        <svg class="star star-4" viewBox="0 0 5 5">
+            <circle cx="2.5" cy="2.5" r="0.4" fill="white" opacity="0.7"/>
+        </svg>
+        <svg class="star star-5" viewBox="0 0 3 3">
+            <circle cx="1.5" cy="1.5" r="0.2" fill="white" opacity="0.8"/>
+        </svg>
+        <svg class="star star-6" viewBox="0 0 5 5">
+            <circle cx="2.5" cy="2.5" r="0.6" fill="white" opacity="0.5"/>
+        </svg>
+        <svg class="star star-7" viewBox="0 0 4 4">
+            <circle cx="2" cy="2" r="0.4" fill="white" opacity="0.7"/>
+        </svg>
+        <svg class="star star-8" viewBox="0 0 6 6">
+            <circle cx="3" cy="3" r="0.5" fill="white" opacity="0.6"/>
+        </svg>
+        <svg class="star star-9" viewBox="0 0 3 3">
+            <circle cx="1.5" cy="1.5" r="0.3" fill="white" opacity="0.9"/>
+        </svg>
+        <svg class="star star-10" viewBox="0 0 4 4">
+            <circle cx="2" cy="2" r="0.5" fill="white" opacity="0.8"/>
+        </svg>
+        <!-- Clouds for light mode -->
+        <svg class="cloud cloud-1" viewBox="0 0 190.326 190.326">
+            <path d="M134.149,182.881H31.021C13.916,182.881,0,168.965,0,151.86s13.916-31.021,31.021-31.021c3.932,0,7.74,0.72,11.347,2.143
+            c6.617-16.396,22.592-27.267,40.413-27.267c24.031,0,43.582,19.551,43.582,43.582c0,0.904-0.028,1.812-0.085,2.72
+            c2.49-0.998,5.157-1.516,7.872-1.516c11.684,0,21.188,9.505,21.188,21.189S145.833,182.881,134.149,182.881z M31.021,124.84
+            C16.121,124.84,4,136.961,4,151.86s12.121,27.021,27.021,27.021h103.129c9.478,0,17.188-7.711,17.188-17.189
+            s-7.711-17.189-17.188-17.189c-3.257,0-6.43,0.919-9.176,2.657c-0.659,0.419-1.505,0.414-2.16-0.014
+            c-0.656-0.427-1.003-1.197-0.888-1.97c0.29-1.944,0.437-3.921,0.437-5.876c0-21.826-17.757-39.582-39.582-39.582
+            c-16.84,0-31.866,10.688-37.391,26.596c-0.187,0.538-0.593,0.97-1.118,1.189c-0.526,0.219-1.119,0.205-1.632-0.041
+            C38.993,125.721,35.084,124.84,31.021,124.84z M169.819,84.186h-65.768c-7.851,0-14.238-6.387-14.238-14.237
+            s6.387-14.238,14.238-14.238c1.451,0,2.882,0.22,4.249,0.648c-0.006-0.23-0.009-0.461-0.009-0.691
+            c0-15.725,12.793-28.518,28.519-28.518c11.424,0,21.688,6.826,26.172,17.19c2.186-0.775,4.477-1.167,6.837-1.167
+            c11.308,0,20.507,9.199,20.507,20.507S181.127,84.186,169.819,84.186z M104.052,59.711c-5.646,0-10.237,4.593-10.237,10.238
+            s4.592,10.237,10.237,10.237h65.768c9.102,0,16.507-7.405,16.507-16.507s-7.405-16.507-16.507-16.507
+            c-2.483,0-4.872,0.539-7.098,1.601c-0.515,0.245-1.105,0.259-1.632,0.041c-0.525-0.22-0.932-0.652-1.119-1.189
+            c-3.422-9.854-12.729-16.474-23.16-16.474c-13.52,0-24.519,10.999-24.519,24.518c0,1.208,0.091,2.433,0.271,3.64
+            c0.115,0.774-0.231,1.544-0.887,1.971c-0.656,0.428-1.501,0.433-2.161,0.014C107.88,60.258,105.991,59.711,104.052,59.711z
+            M63.127,42.212H24.975c-7.023,0-12.736-5.713-12.736-12.736c0-7.023,5.713-12.736,12.736-12.736c1.204,0,2.379,0.165,3.514,0.491
+            c2.879-5.927,8.93-9.785,15.635-9.785c9.362,0,17.019,7.438,17.371,16.716c0.536-0.098,1.083-0.147,1.633-0.147
+            c5.017,0,9.099,4.082,9.099,9.099S68.145,42.212,63.127,42.212z M24.975,20.74c-4.817,0-8.736,3.919-8.736,8.736
+            c0,4.817,3.919,8.736,8.736,8.736h38.152c2.812,0,5.099-2.288,5.099-5.099s-2.288-5.099-5.099-5.099
+            c-0.965,0-1.906,0.272-2.721,0.788c-0.661,0.419-1.505,0.414-2.161-0.014c-0.656-0.427-1.002-1.196-0.887-1.97
+            c0.098-0.659,0.147-1.328,0.147-1.988c0-7.379-6.004-13.383-13.383-13.383c-5.694,0-10.774,3.614-12.643,8.993
+            c-0.187,0.538-0.593,0.97-1.118,1.189c-0.525,0.219-1.119,0.204-1.632-0.041C27.553,21.025,26.29,20.74,24.975,20.74z" fill="currentColor"/>
+        </svg>
+        <svg class="cloud cloud-2" viewBox="0 0 190.326 190.326">
+            <path d="M134.149,182.881H31.021C13.916,182.881,0,168.965,0,151.86s13.916-31.021,31.021-31.021c3.932,0,7.74,0.72,11.347,2.143
+            c6.617-16.396,22.592-27.267,40.413-27.267c24.031,0,43.582,19.551,43.582,43.582c0,0.904-0.028,1.812-0.085,2.72
+            c2.49-0.998,5.157-1.516,7.872-1.516c11.684,0,21.188,9.505,21.188,21.189S145.833,182.881,134.149,182.881z M31.021,124.84
+            C16.121,124.84,4,136.961,4,151.86s12.121,27.021,27.021,27.021h103.129c9.478,0,17.188-7.711,17.188-17.189
+            s-7.711-17.189-17.188-17.189c-3.257,0-6.43,0.919-9.176,2.657c-0.659,0.419-1.505,0.414-2.16-0.014
+            c-0.656-0.427-1.003-1.197-0.888-1.97c0.29-1.944,0.437-3.921,0.437-5.876c0-21.826-17.757-39.582-39.582-39.582
+            c-16.84,0-31.866,10.688-37.391,26.596c-0.187,0.538-0.593,0.97-1.118,1.189c-0.526,0.219-1.119,0.205-1.632-0.041
+            C38.993,125.721,35.084,124.84,31.021,124.84z M169.819,84.186h-65.768c-7.851,0-14.238-6.387-14.238-14.237
+            s6.387-14.238,14.238-14.238c1.451,0,2.882,0.22,4.249,0.648c-0.006-0.23-0.009-0.461-0.009-0.691
+            c0-15.725,12.793-28.518,28.519-28.518c11.424,0,21.688,6.826,26.172,17.19c2.186-0.775,4.477-1.167,6.837-1.167
+            c11.308,0,20.507,9.199,20.507,20.507S181.127,84.186,169.819,84.186z M104.052,59.711c-5.646,0-10.237,4.593-10.237,10.238
+            s4.592,10.237,10.237,10.237h65.768c9.102,0,16.507-7.405,16.507-16.507s-7.405-16.507-16.507-16.507
+            c-2.483,0-4.872,0.539-7.098,1.601c-0.515,0.245-1.105,0.259-1.632,0.041c-0.525-0.22-0.932-0.652-1.119-1.189
+            c-3.422-9.854-12.729-16.474-23.16-16.474c-13.52,0-24.519,10.999-24.519,24.518c0,1.208,0.091,2.433,0.271,3.64
+            c0.115,0.774-0.231,1.544-0.887,1.971c-0.656,0.428-1.501,0.433-2.161,0.014C107.88,60.258,105.991,59.711,104.052,59.711z
+            M63.127,42.212H24.975c-7.023,0-12.736-5.713-12.736-12.736c0-7.023,5.713-12.736,12.736-12.736c1.204,0,2.379,0.165,3.514,0.491
+            c2.879-5.927,8.93-9.785,15.635-9.785c9.362,0,17.019,7.438,17.371,16.716c0.536-0.098,1.083-0.147,1.633-0.147
+            c5.017,0,9.099,4.082,9.099,9.099S68.145,42.212,63.127,42.212z M24.975,20.74c-4.817,0-8.736,3.919-8.736,8.736
+            c0,4.817,3.919,8.736,8.736,8.736h38.152c2.812,0,5.099-2.288,5.099-5.099s-2.288-5.099-5.099-5.099
+            c-0.965,0-1.906,0.272-2.721,0.788c-0.661,0.419-1.505,0.414-2.161-0.014c-0.656-0.427-1.002-1.196-0.887-1.97
+            c0.098-0.659,0.147-1.328,0.147-1.988c0-7.379-6.004-13.383-13.383-13.383c-5.694,0-10.774,3.614-12.643,8.993
+            c-0.187,0.538-0.593,0.97-1.118,1.189c-0.525,0.219-1.119,0.204-1.632-0.041C27.553,21.025,26.29,20.74,24.975,20.74z" fill="currentColor"/>
+        </svg>
+        <svg class="galaxy galaxy-1" viewBox="0 0 48 48">
+            <g stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" opacity="0.1">
+                <path d="M43.5,28.3294a19.5,19.5,0,0,0-39,0"/>
+                <path d="M18.4694,32.593a6.9229,6.9229,0,0,0,9.79-9.7905"/>
+                <path d="M23.25,39.1706a11.2273,11.2273,0,1,0,0-22.4545"/>
+                <path d="M34.6024,38.2223a14.6374,14.6374,0,1,0-20.7-20.7"/>
+            </g>
+        </svg>
+        <svg class="galaxy galaxy-2" viewBox="0 0 48 48">
+            <g stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3" opacity="0.08">
+                <path d="M43.5,28.3294a19.5,19.5,0,0,0-39,0"/>
+                <path d="M18.4694,32.593a6.9229,6.9229,0,0,0,9.79-9.7905"/>
+                <path d="M23.25,39.1706a11.2273,11.2273,0,1,0,0-22.4545"/>
+                <path d="M34.6024,38.2223a14.6374,14.6374,0,1,0-20.7-20.7"/>
+            </g>
+        </svg>
+        <svg class="star star-4" viewBox="0 0 5 5">
+            <circle cx="2.5" cy="2.5" r="0.4" fill="white" opacity="0.5"/>
+        </svg>
+        <svg class="star star-5" viewBox="0 0 3 3">
+            <circle cx="1.5" cy="1.5" r="0.2" fill="white" opacity="0.8"/>
+        </svg>
+        <!-- Sun for light mode -->
+        <svg class="sun" viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V2C11.25 1.58579 11.5858 1.25 12 1.25ZM3.66865 3.71609C3.94815 3.41039 4.42255 3.38915 4.72825 3.66865L6.95026 5.70024C7.25596 5.97974 7.2772 6.45413 6.9977 6.75983C6.7182 7.06553 6.2438 7.08677 5.9381 6.80727L3.71609 4.77569C3.41039 4.49619 3.38915 4.02179 3.66865 3.71609ZM20.3314 3.71609C20.6109 4.02179 20.5896 4.49619 20.2839 4.77569L18.0619 6.80727C17.7562 7.08677 17.2818 7.06553 17.0023 6.75983C16.7228 6.45413 16.744 5.97974 17.0497 5.70024L19.2718 3.66865C19.5775 3.38915 20.0518 3.41039 20.3314 3.71609ZM12 7.75C9.65279 7.75 7.75 9.65279 7.75 12C7.75 14.3472 9.65279 16.25 12 16.25C14.3472 16.25 16.25 14.3472 16.25 12C16.25 9.65279 14.3472 7.75 12 7.75ZM6.25 12C6.25 8.82436 8.82436 6.25 12 6.25C15.1756 6.25 17.75 8.82436 17.75 12C17.75 15.1756 15.1756 17.75 12 17.75C8.82436 17.75 6.25 15.1756 6.25 12ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM17.0255 17.0252C17.3184 16.7323 17.7933 16.7323 18.0862 17.0252L20.3082 19.2475C20.6011 19.5404 20.601 20.0153 20.3081 20.3082C20.0152 20.6011 19.5403 20.601 19.2475 20.3081L17.0255 18.0858C16.7326 17.7929 16.7326 17.3181 17.0255 17.0252ZM6.97467 17.0253C7.26756 17.3182 7.26756 17.7931 6.97467 18.086L4.75244 20.3082C4.45955 20.6011 3.98468 20.6011 3.69178 20.3082C3.39889 20.0153 3.39889 19.5404 3.69178 19.2476L5.91401 17.0253C6.2069 16.7324 6.68177 16.7324 6.97467 17.0253ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="currentColor"/>
+        </svg>
+        <!-- Moon for dark mode -->
+        <svg class="moon" viewBox="0 0 24 24" fill="none">
+            <path d="M21.0672 11.8568L20.4253 11.469L21.0672 11.8568ZM12.1432 2.93276L11.7553 2.29085V2.29085L12.1432 2.93276ZM7.37554 20.013C7.017 19.8056 6.5582 19.9281 6.3508 20.2866C6.14339 20.6452 6.26591 21.104 6.62446 21.3114L7.37554 20.013ZM2.68862 17.3755C2.89602 17.7341 3.35482 17.8566 3.71337 17.6492C4.07191 17.4418 4.19443 16.983 3.98703 16.6245L2.68862 17.3755ZM21.25 12C21.25 17.1086 17.1086 21.25 12 21.25V22.75C17.9371 22.75 22.75 17.9371 22.75 12H21.25ZM2.75 12C2.75 6.89137 6.89137 2.75 12 2.75V1.25C6.06294 1.25 1.25 6.06294 1.25 12H2.75ZM15.5 14.25C12.3244 14.25 9.75 11.6756 9.75 8.5H8.25C8.25 12.5041 11.4959 15.75 15.5 15.75V14.25ZM20.4253 11.469C19.4172 13.1373 17.5882 14.25 15.5 14.25V15.75C18.1349 15.75 20.4407 14.3439 21.7092 12.2447L20.4253 11.469ZM9.75 8.5C9.75 6.41182 10.8627 4.5828 12.531 3.57467L11.7553 2.29085C9.65609 3.5593 8.25 5.86509 8.25 8.5H9.75ZM12 2.75C11.9115 2.75 11.8077 2.71008 11.7324 2.63168C11.6686 2.56527 11.6538 2.50244 11.6503 2.47703C11.6461 2.44587 11.6482 2.35557 11.7553 2.29085L12.531 3.57467C13.0342 3.27065 13.196 2.71398 13.1368 2.27627C13.0754 1.82126 12.7166 1.25 12 1.25V2.75ZM21.7092 12.2447C21.6444 12.3518 21.5541 12.3539 21.523 12.3497C21.4976 12.3462 21.4347 12.3314 21.3683 12.2676C21.2899 12.1923 21.25 12.0885 21.25 12H22.75C22.75 11.2834 22.1787 10.9246 21.7237 10.8632C21.286 10.804 20.7293 10.9658 20.4253 11.469L21.7092 12.2447ZM12 21.25C10.3139 21.25 8.73533 20.7996 7.37554 20.013L6.62446 21.3114C8.2064 22.2265 10.0432 22.75 12 22.75V21.25ZM3.98703 16.6245C3.20043 15.2647 2.75 13.6861 2.75 12H1.25C1.25 13.9568 1.77351 15.7936 2.68862 17.3755L3.98703 16.6245Z" fill="currentColor"/>
+        </svg>
+    </div>
     <!-- Invisible element at the very top for home navigation -->
     <div id="top"></div>
     
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-links">
-                <!-- Left side - Creative Section and Projects Section -->
+                <!-- Left side - Development Section and Creative Section -->
+                <a href="#development" class="nav-icon nav-left" title="Development">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 18L22 12L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 6L2 12L8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
                 <a href="#creative" class="nav-icon nav-left" title="Creative Section">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <!-- Lightbulb icon for creative ideas -->
                         <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M9 18H15V21C15 21.55 14.55 22 14 22H10C9.45 22 9 21.55 9 21V18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M12 7V9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </a>
-                <a href="#projects" class="nav-icon nav-left" title="Projects">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 7V5C3 3.89543 3.89543 3 5 3H9L11 5H19C20.1046 5 21 5.89543 21 7V7C21 8.10457 20.1046 9 19 9H5C3.89543 9 3 8.10457 3 7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        <path d="M3 7V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V9C21 7.89543 20.1046 7 19 7H5C3.89543 7 3 7.89543 3 7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                     </svg>
                 </a>
                 
@@ -68,129 +180,19 @@
     <main class="main-content">
         <div id="hero" class="hero-section">
             <div class="profile-image">
-                <img src="assets/profilpicture.jpg" alt="Profilbild">
+                <img src="public/assets/images/profile.jpg" alt="Profilbild">
             </div>
             
             <h1 class="hero-title">
-                Hey, I'm Mathis.<br>
+                Hello, I'm Mathis.<br>
             </h1>
             
             <p class="hero-description">
-            I'm 20 and currently training to become an IT specialist in system integration. I'm all about combining tech and creativity - whether it's writing code, setting up networks, jamming on my guitar, or building side projects just for fun.</p>
+            I'm a 20-year-old IT specialist trainee specializing in system integration. I focus on combining technical expertise with creative solutions, developing applications, managing network infrastructure, and building innovative projects.</p>
         </div>
 
-        <section id="creative" class="creative-section">
-            <h2 class="section-title">Creative</h2>
-            <p class="creative-description">
-                Off the clock, you'll find me digging through vinyl crates, lost in a book, or catching that perfect sunset shot. My way of staying sane in a digital world.
-            </p>
-            
-            <div class="creative-preview">
-                <div class="creative-items">
-                    <div class="creative-item">
-                        <div class="creative-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Electric guitar from SVG Repo -->
-                                <path d="M5.5 16.5c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l2.94 2.94c0.1 0.1 0.24 0.16 0.38 0.16c0.14 0 0.28-0.05 0.38-0.16c0.21-0.21 0.21-0.55 0-0.76L5.5 16.5z" fill="currentColor"/>
-                                <path d="M8 14.7c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l1.42 1.42c0.1 0.1 0.24 0.16 0.38 0.16c0.14 0 0.28-0.05 0.38-0.16c0.21-0.21 0.21-0.55 0-0.76L8 14.7z" fill="currentColor"/>
-                                <path d="M23.7 2c-0.12-0.52-0.26-0.86-0.4-1.01c-0.2-0.2-0.44-0.31-0.69-0.31c-0.13 0-0.25 0.03-0.36 0.08c-0.12 0.06-0.25 0.12-0.38 0.19l-0.5-0.5c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l0.26 0.26c-0.23 0.13-0.47 0.26-0.7 0.38l-0.3-0.3c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l0.08 0.08c-0.46 0.26-0.78 0.45-0.82 0.47c-0.04 0.02-0.08 0.05-0.11 0.08c-0.25 0.26-0.33 0.62-0.24 0.95l-6.56 6.56c-0.04-0.02-0.09-0.04-0.13-0.06c-0.28-0.13-0.53-0.25-0.76-0.48c-0.21-0.21 0.33-1.07 0.61-1.53c0.5-0.81 1.01-1.64 0.42-2.23c-0.11-0.11-0.31-0.25-0.63-0.25c-0.84 0-2.01 0.99-2.26 1.23c-0.94 0.94-1.32 1.67-1.68 2.38c-0.32 0.62-0.63 1.21-1.35 1.93c-0.54 0.54-1.24 0.81-1.99 1.09c-0.86 0.33-1.75 0.66-2.52 1.43c-3.32 3.32-0.09 6.55 1.13 7.77c1.21 1.21 2.83 2.59 4.66 2.59c1.09 0 2.14-0.49 3.11-1.46c0.77-0.77 1.1-1.66 1.43-2.52c0.28-0.75 0.55-1.45 1.09-1.99c0.52-0.52 0.93-0.71 1.4-0.93c0.49-0.23 1.05-0.49 1.69-1.14c1.6-1.6 1.49-2.38 1.12-2.76c-0.2-0.2-0.47-0.3-0.8-0.3c-0.37 0-0.78 0.13-1.2 0.27c-0.43 0.14-0.87 0.28-1.23 0.28c-0.24 0-0.41-0.06-0.55-0.2c-0.09-0.09-0.16-0.17-0.2-0.24l7.32-7.32c0.09 0.03 0.18 0.04 0.28 0.04c0.26 0 0.5-0.1 0.68-0.28l2.5-2.5C23.8 2.78 23.83 2.42 23.7 2zM19 4.8l0.6 0.6l-6.46 6.46c-0.07-0.23-0.21-0.47-0.46-0.73l0-0L19 4.8zM13.9 14.9C13.9 14.9 13.9 14.9 13.9 14.9c0.53 0 1.08-0.18 1.56-0.33c0.28-0.09 0.56-0.18 0.77-0.21c-0.14 0.28-0.5 0.75-0.97 1.22c-0.52 0.52-0.92 0.71-1.39 0.93c-0.49 0.23-1.05 0.49-1.7 1.15c-0.7 0.7-1.02 1.55-1.33 2.37c-0.3 0.79-0.58 1.54-1.19 2.14c-0.77 0.77-1.54 1.15-2.35 1.15c-1.44 0-2.84-1.22-3.9-2.28c-0.81-0.81-1.78-1.89-2.14-3.03c-0.35-1.13-0.02-2.19 1.01-3.22c0.6-0.6 1.35-0.89 2.14-1.19c0.82-0.31 1.67-0.63 2.37-1.33c0.84-0.84 1.2-1.53 1.54-2.2c0.34-0.66 0.67-1.29 1.49-2.11c0.32-0.32 0.87-0.69 1.24-0.84c-0.11 0.23-0.31 0.55-0.44 0.77c-0.53 0.86-1.26 2.05-0.46 2.85c0.36 0.36 0.73 0.54 1.06 0.69c0.28 0.13 0.52 0.24 0.74 0.46c0.25 0.25 0.23 0.35 0.15 0.67c-0.11 0.43-0.26 1.07 0.5 1.83C12.9 14.74 13.34 14.9 13.9 14.9zM20.7 5.2l-1.28-1.28c0.61-0.35 2.33-1.34 3.4-1.86c0.08 0.23 0.17 0.62 0.19 0.82L20.7 5.2z" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <h3>Guitar Vibes</h3>
-                        <p>Sometimes acoustic, sometimes electric – I play whatever feels interesting at the moment.</p>
-                        <a href="#" class="vinyl-collection-btn">
-                            Coming Soon
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                    
-                    <div class="creative-item">
-                        <div class="creative-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                                
-                            </svg>
-                        </div>
-                        <h3>Vinyl Collection</h3>
-                        <p>I collect records and enjoy discovering music that stands out. Here's a glimpse into my collection.</p>
-                        <a href="vinyl.html" class="vinyl-collection-btn">
-                            View Collection
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                    
-                    <div class="creative-item">
-                        <div class="creative-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3>Reading Corner</h3>
-                        <p>I read a bit of everything – sci-fi, biographies, and sometimes philosophy, depending on what sparks my curiosity.</p>
-                        <a href="#" class="vinyl-collection-btn">
-                            Coming Soon
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                    
-                    <div class="creative-item">
-                        <div class="creative-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3>Gallery</h3>
-                        <p>Photos from moments that felt worth capturing – mostly night skies, sunsets, and clouds.</p>
-                        <a href="#" class="vinyl-collection-btn">
-                            Coming Soon
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="projects-section">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-filter">
-                <button class="filter-btn " data-filter="all">All</button>
-                <button class="filter-btn active" data-filter="pinned">Pinned</button>
-                <button class="filter-btn" data-filter="recent">Latest</button>
-            </div>
-            <div class="projects-loading" id="projects-loading">
-                <div class="loading-spinner"></div>
-                <p>Loading projects from GitHub...</p>
-            </div>
-            <div class="projects-grid" id="projects-grid">
-                <!-- Projects will be dynamically loaded from GitHub -->
-            </div>
-        </section>
-
-
-
-
-
-
-
-
-<section id="contact" class="contact-section">
-            <h2 class="section-title">Links</h2>
+        <section id="contact" class="contact-section">
+            <h2 class="section-title"><span class="title-text">Links</span></h2>
             <div class="links-container">
                 <!-- Professional Row -->
                 <div class="links-row">
@@ -216,13 +218,7 @@
                 <div class="links-row">
                     <h3 class="links-subtitle">Social</h3>
                     <div class="links-icons">
-                        <a href="https://www.instagram.com/mattyy.tr/" target="_blank" class="link-icon" title="Instagram">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z" stroke="currentColor" stroke-width="2"/>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </a>
+                    
                         <a href="https://github.com/MathisTRD" target="_blank" class="link-icon" title="GitHub">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15 22V18C15 17 15 16 14 15C17 14.5 20 12.5 20 9C20 8 19.5 7 19 6C19.2 5 19.2 4 19 3C19 3 18 3 16 5C15.5 5 14.5 5 14 5C13.5 5 12.5 5 12 5C10 3 9 3 9 3C8.8 4 8.8 5 9 6C8.5 7 8 8 8 9C8 12.5 11 14.5 14 15C13 16 13 17 13 18V22M9 19C4 20.5 4 16.5 2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -237,16 +233,259 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section id="development" class="development-section">
+            <h2 class="section-title"><span class="title-text">Development</span></h2>
             
-    <script src="js/script.js"></script>
-</body>
-</html>
-            <div class="footer-content" style="text-align: center; margin-top: 3rem; width: 100%; display: flex; justify-content: center;">
-                <p>&copy; Mathis</p>
+            <!-- Technologies Subsection -->
+            <div class="development-subsection">
+                <h3 class="subsection-title">
+                    <svg class="gear-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </h3>
+                <p class="technologies-description">
+                    Technologies and tools I work with to build robust and scalable solutions.
+                </p>
+                
+                <div class="technologies-grid">
+                    <div class="tech-category">
+                        <div class="tech-category-icon">
+                            <svg width="32" height="32" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 18L26 12L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8 6L2 12L8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 2L12 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4 class="tech-category-title">Programming Languages & Frameworks</h4>
+                        <div class="tech-items">
+
+                            <span class="tech-item python">
+                                Python
+                            </span>
+                            <span class="tech-item nodejs">
+                                Node.js
+                            </span>
+                            <span class="tech-item react">
+                                 Next.js
+                            </span>
+                            <span class="tech-item tailwind">
+                                Rust
+                            </span>
+                            <span class="tech-item tailwind">
+                                C++
+                            </span>
+                            <span class="tech-item tailwind">
+                                Go
+                            </span>
+                            <span class="tech-item tailwind">
+                                TypeScript
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-category">
+                        <div class="tech-category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h4 class="tech-category-title">Data Management</h4>
+                        <div class="tech-items">
+                            <span class="tech-item postgres">
+                                PostgreSQL
+                            </span>
+                            <span class="tech-item mysql">
+                                MySQL
+                            </span>
+                            <span class="tech-item sqlite">
+                                SQLite
+                            </span>
+                            <span class="tech-item mongodb">
+                                MongoDB
+                            </span>
+                            <span class="tech-item supabase">
+                                Supabase
+                            </span>
+                            <span class="tech-item neondb">
+                                Neon DB
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-category">
+                        <div class="tech-category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 17L10 11L4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 19H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4 class="tech-category-title">Automation & Scripting</h4>
+                        <div class="tech-items">
+                            <span class="tech-item bash">
+                                Shell Scripting
+                            </span>
+                            <span class="tech-item powershell">
+                                PowerShell
+                            </span>
+                            <span class="tech-item git">
+                                Git & GitHub
+                            </span>
+                            <span class="tech-item ssh">
+                                CI/CD Pipelines
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-category">
+                        <div class="tech-category-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4 class="tech-category-title">Infrastructure & DevOps</h4>
+                        <div class="tech-items">
+                            <span class="tech-item docker">
+                                Virtualization
+                            </span>
+                            <span class="tech-item container">
+                                Containerization
+                            </span>
+                            <span class="tech-item linux">
+                                Cloud (AWS, Azure)
+                            </span>
+                            <span class="tech-item windowsserver">
+                                SysAdmin
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Separator -->
+            <div class="section-separator">
+                <div class="separator-line"></div>
+            </div>
+
+            <!-- Projects Subsection -->
+            <div class="development-subsection">
+                <h3 class="subsection-title">
+                    <svg class="folder-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </h3>
+                <p class="projects-description">
+                    A collection of my development projects hosted on GitHub, showcasing various technologies and solutions I've built.
+                </p>
+                <div class="projects-filter">
+                    <button class="filter-btn" data-filter="all">All</button>
+                    <button class="filter-btn active" data-filter="pinned">Pinned</button>
+                    <button class="filter-btn" data-filter="recent">Latest</button>
+                </div>
+                <div class="projects-loading" id="projects-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Projects will be dynamically loaded from GitHub -->
+                </div>
+            </div>
+        </section>
+
+        <section id="creative" class="creative-section">
+            <h2 class="section-title"><span class="title-text">Creative</span></h2>
+            <p class="creative-description">
+                Beyond my technical work, I maintain diverse interests including music collection, literature, and photography. These creative pursuits provide balance and inspiration for my professional development.
+            </p>
+            
+            <div class="creative-preview">
+                <div class="creative-items">
+                    <div class="creative-item">
+                        <div class="creative-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Electric guitar from SVG Repo -->
+                                <path d="M5.5 16.5c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l2.94 2.94c0.1 0.1 0.24 0.16 0.38 0.16c0.14 0 0.28-0.05 0.38-0.16c0.21-0.21 0.21-0.55 0-0.76L5.5 16.5z" fill="currentColor"/>
+                                <path d="M8 14.7c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l1.42 1.42c0.1 0.1 0.24 0.16 0.38 0.16c0.14 0 0.28-0.05 0.38-0.16c0.21-0.21 0.21-0.55 0-0.76L8 14.7z" fill="currentColor"/>
+                                <path d="M23.7 2c-0.12-0.52-0.26-0.86-0.4-1.01c-0.2-0.2-0.44-0.31-0.69-0.31c-0.13 0-0.25 0.03-0.36 0.08c-0.12 0.06-0.25 0.12-0.38 0.19l-0.5-0.5c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l0.26 0.26c-0.23 0.13-0.47 0.26-0.7 0.38l-0.3-0.3c-0.21-0.21-0.55-0.21-0.76 0c-0.21 0.21-0.21 0.55 0 0.76l0.08 0.08c-0.46 0.26-0.78 0.45-0.82 0.47c-0.04 0.02-0.08 0.05-0.11 0.08c-0.25 0.26-0.33 0.62-0.24 0.95l-6.56 6.56c-0.04-0.02-0.09-0.04-0.13-0.06c-0.28-0.13-0.53-0.25-0.76-0.48c-0.21-0.21 0.33-1.07 0.61-1.53c0.5-0.81 1.01-1.64 0.42-2.23c-0.11-0.11-0.31-0.25-0.63-0.25c-0.84 0-2.01 0.99-2.26 1.23c-0.94 0.94-1.32 1.67-1.68 2.38c-0.32 0.62-0.63 1.21-1.35 1.93c-0.54 0.54-1.24 0.81-1.99 1.09c-0.86 0.33-1.75 0.66-2.52 1.43c-3.32 3.32-0.09 6.55 1.13 7.77c1.21 1.21 2.83 2.59 4.66 2.59c1.09 0 2.14-0.49 3.11-1.46c0.77-0.77 1.1-1.66 1.43-2.52c0.28-0.75 0.55-1.45 1.09-1.99c0.52-0.52 0.93-0.71 1.4-0.93c0.49-0.23 1.05-0.49 1.69-1.14c1.6-1.6 1.49-2.38 1.12-2.76c-0.2-0.2-0.47-0.3-0.8-0.3c-0.37 0-0.78 0.13-1.2 0.27c-0.43 0.14-0.87 0.28-1.23 0.28c-0.24 0-0.41-0.06-0.55-0.2c-0.09-0.09-0.16-0.17-0.2-0.24l7.32-7.32c0.09 0.03 0.18 0.04 0.28 0.04c0.26 0 0.5-0.1 0.68-0.28l2.5-2.5C23.8 2.78 23.83 2.42 23.7 2zM19 4.8l0.6 0.6l-6.46 6.46c-0.07-0.23-0.21-0.47-0.46-0.73l0-0L19 4.8zM13.9 14.9C13.9 14.9 13.9 14.9 13.9 14.9c0.53 0 1.08-0.18 1.56-0.33c0.28-0.09 0.56-0.18 0.77-0.21c-0.14 0.28-0.5 0.75-0.97 1.22c-0.52 0.52-0.92 0.71-1.39 0.93c-0.49 0.23-1.05 0.49-1.7 1.15c-0.7 0.7-1.02 1.55-1.33 2.37c-0.3 0.79-0.58 1.54-1.19 2.14c-0.77 0.77-1.54 1.15-2.35 1.15c-1.44 0-2.84-1.22-3.9-2.28c-0.81-0.81-1.78-1.89-2.14-3.03c-0.35-1.13-0.02-2.19 1.01-3.22c0.6-0.6 1.35-0.89 2.14-1.19c0.82-0.31 1.67-0.63 2.37-1.33c0.84-0.84 1.2-1.53 1.54-2.2c0.34-0.66 0.67-1.29 1.49-2.11c0.32-0.32 0.87-0.69 1.24-0.84c-0.11 0.23-0.31 0.55-0.44 0.77c-0.53 0.86-1.26 2.05-0.46 2.85c0.36 0.36 0.73 0.54 1.06 0.69c0.28 0.13 0.52 0.24 0.74 0.46c0.25 0.25 0.23 0.35 0.15 0.67c-0.11 0.43-0.26 1.07 0.5 1.83C12.9 14.74 13.34 14.9 13.9 14.9zM20.7 5.2l-1.28-1.28c0.61-0.35 2.33-1.34 3.4-1.86c0.08 0.23 0.17 0.62 0.19 0.82L20.7 5.2z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Musical Skills</h3>
+                        <a href="#" class="vinyl-collection-btn">
+                            Coming Soon
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="creative-item">
+                        <div class="creative-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                
+                            </svg>
+                        </div>
+                        <h3>Music Collection</h3>
+                        <a href="vinyl.html" class="vinyl-collection-btn">
+                            View Collection
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="creative-item">
+                        <div class="creative-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Continuous Learning</h3>
+                        <a href="#" class="vinyl-collection-btn">
+                            Coming Soon
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="creative-item">
+                        <div class="creative-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Photography</h3>
+                        <a href="#" class="vinyl-collection-btn">
+                            Coming Soon
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="src/scripts/main.js"></script>
+
+    <div class="footer-content" style="text-align: center; margin-top: 3rem; width: 100%; display: flex; justify-content: center;">
+        <p>&copy; Mathis</p>
+    </div>
 </body>
 </html>

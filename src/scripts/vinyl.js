@@ -263,6 +263,7 @@ class VinylCollection {
     renderRecords() {
         const grid = document.getElementById('vinyl-grid');
         if (!grid) return;
+
         grid.innerHTML = '';
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
@@ -417,6 +418,27 @@ class VinylCollection {
             this.renderRecords();
             this.setupPagination();
         }
+    }
+
+    clearFilters() {
+        // Clear search input
+        const searchInput = document.getElementById('vinyl-search');
+        if (searchInput) searchInput.value = '';
+        
+        // Reset filter dropdowns
+        const genreFilter = document.getElementById('genre-filter');
+        const yearFilter = document.getElementById('year-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        
+        if (genreFilter) genreFilter.value = '';
+        if (yearFilter) yearFilter.value = '';
+        if (sortFilter) sortFilter.value = 'date_added';
+        
+        // Reset filtered records to show all
+        this.filteredRecords = [...this.allRecords];
+        this.currentPage = 1;
+        this.renderRecords();
+        this.setupPagination();
     }
 }
 function loadVinylCollection() {
