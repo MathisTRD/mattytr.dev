@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/css/(.*)",
+      "source": "/styles/css/(.*)",
       "headers": [
         {
           "key": "Content-Type",
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "source": "/js/(.*)",
+      "source": "/scripts/(.*)", 
       "headers": [
         {
           "key": "Content-Type",
