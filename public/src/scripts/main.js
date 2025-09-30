@@ -609,7 +609,7 @@ class GitHubPortfolio {
 
     generateScreenshotHTML(repo) {
         return `
-            <img src="/public/assets/screenshots/${repo.name}.png" 
+            <img src="./assets/screenshots/${repo.name}.png" 
                  alt="${repo.name} Screenshot" 
                  loading="lazy" 
                  onerror="portfolioManager.handleImageError(this, '${repo.name}')">
@@ -655,7 +655,7 @@ class GitHubPortfolio {
 
     async hasCustomScreenshot(repoName) {
         try {
-            const response = await fetch(`/public/assets/screenshots/${repoName}.png`, { method: 'HEAD' });
+            const response = await fetch(`./assets/screenshots/${repoName}.png`, { method: 'HEAD' });
             return response.ok;
         } catch {
             return false;
