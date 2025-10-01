@@ -68,6 +68,10 @@ class NavbarManager {
     constructor() {
         this.navbar = document.querySelector('.navbar');
         this.isScrolled = false;
+        this.isMobileExpanded = false;
+        this.isMobile = this.isTouchDevice();
+        this.touchStartTime = 0;
+        this.expandTimeout = null;
         
         this.init();
     }
@@ -77,12 +81,91 @@ class NavbarManager {
         
         this.updateHeight();
         this.bindEvents();
+        this.setupMobileTouchBehavior();
+    }
+
+    isTouchDevice() {
+        return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
     }
 
     bindEvents() {
         window.addEventListener('load', () => this.updateHeight());
-        window.addEventListener('resize', () => this.updateHeight());
+        window.addEventListener('resize', () => {
+            this.isMobile = this.isTouchDevice();
+            this.updateHeight();
+        });
         window.addEventListener('scroll', () => this.handleScroll());
+    }
+
+    setupMobileTouchBehavior() {
+        if (!this.navbar) return;
+
+        // Handle mobile touch/tap on navbar
+        this.navbar.addEventListener('touchstart', (e) => {
+            if (!this.isMobile) return;
+            this.touchStartTime = Date.now();
+            
+            if (this.isScrolled && !this.isMobileExpanded) {
+                e.preventDefault();
+                this.expandMobileNavbar();
+            }
+        });
+
+        this.navbar.addEventListener('click', (e) => {
+            if (!this.isMobile) return;
+            
+            const target = e.target.closest('.nav-icon');
+            if (!target) return;
+
+            // If navbar is collapsed and not expanded, expand it first
+            if (this.isScrolled && !this.isMobileExpanded) {
+                e.preventDefault();
+                this.expandMobileNavbar();
+                return;
+            }
+        });
+
+        // Collapse mobile navbar when clicking outside
+        document.addEventListener('touchstart', (e) => {
+            if (!this.isMobile || !this.isMobileExpanded) return;
+            
+            if (!this.navbar.contains(e.target)) {
+                this.collapseMobileNavbar();
+            }
+        });
+
+        // Auto-collapse after navigation
+        document.querySelectorAll('.nav-icon[href^="#"]').forEach(link => {
+            link.addEventListener('click', () => {
+                if (this.isMobile && this.isMobileExpanded) {
+                    setTimeout(() => this.collapseMobileNavbar(), 100);
+                }
+            });
+        });
+    }
+
+    expandMobileNavbar() {
+        if (!this.isMobile) return;
+        
+        this.isMobileExpanded = true;
+        this.navbar.classList.add('mobile-expanded');
+        
+        // Auto-collapse after 3 seconds if no interaction
+        this.expandTimeout = setTimeout(() => {
+            this.collapseMobileNavbar();
+        }, 3000);
+    }
+
+    collapseMobileNavbar() {
+        if (!this.isMobile) return;
+        
+        this.isMobileExpanded = false;
+        this.navbar.classList.remove('mobile-expanded');
+        
+        if (this.expandTimeout) {
+            clearTimeout(this.expandTimeout);
+            this.expandTimeout = null;
+        }
     }
 
     updateHeight() {

@@ -241,8 +241,15 @@ body {
 }
 
 [data-theme="light"] .cloud {
-    opacity: 0.5;
+    opacity: 0.15;
     transform: translateY(0);
+}
+
+/* Further reduce cloud opacity on mobile for better text readability */
+@media (max-width: 768px) {
+    [data-theme="light"] .cloud {
+        opacity: 0.08;
+    }
 }
 
 
@@ -368,11 +375,15 @@ body {
     /* Collapse to circular shape */
     width: 60px;
     height: 60px;
-    padding: 16px;
+    padding: 8px;
     border-radius: 50%;
     overflow: hidden;
     /* Keep centered with transform */
     transform: translateX(-50%);
+    /* Ensure vertical centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* Same smooth transition */
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -404,7 +415,7 @@ body {
     gap: 16px;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     justify-content: center;
-    height: 40px; /* Fixed height to prevent jumping */
+    height: 44px; /* Match home button height for consistent centering */
 }
 
 /* Container bleibt flexibel für organische Animation */
@@ -413,7 +424,8 @@ body {
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     justify-content: center;
     align-items: center;
-    height: 40px; /* Consistent height */
+    height: 44px; /* Match home button height for perfect centering */
+    display: flex;
 }
 
 /* Container beim Hover expandieren */
@@ -556,9 +568,11 @@ body {
     z-index: 100;
     position: relative;
     /* Ensure consistent centering */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
+    transform: none !important;
     /* Smooth transition for all changes */
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -597,20 +611,27 @@ body {
     border: none; /* Remove border */
     box-shadow: 0 0 20px var(--glow-color);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    opacity: 1; /* Sicherstellen dass Home-Icon sichtbar bleibt */
-    /* Remove transform override to prevent jumping */
-    /* Center the home icon in collapsed state */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Move icon higher to true center */
-    transform: translateY(-6px);
+    opacity: 1;
+    /* Perfect centering within container - use !important to override conflicts */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    position: relative !important;
+    margin: auto !important;
 }
+
+/* Remove the mobile override since we're not using transforms anymore */
 
 .navbar.scrolled .nav-home:hover {
     background-color: var(--hover-bg);
-    transform: scale(1.05);
+    transform: scale(1.05) !important;
     transition: all 0.3s ease; /* Quick hover response */
+    /* Maintain centering even during scale */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
 }
 
 /* Icons wieder anzeigen beim Hover */
@@ -629,6 +650,13 @@ body {
     box-shadow: none;
     color: var(--text-muted);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Ensure centering is maintained on hover - use !important */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    position: relative !important;
+    margin: auto !important;
 }
 
 .navbar.scrolled:hover .nav-links a:first-child:hover {
@@ -863,7 +891,11 @@ body {
 
 /* Light Mode General Text Fixes */
 [data-theme="light"] .skill-category h3 {
-    color: var(--text-primary) !important;
+    color: #1a1a1a !important;
+}
+
+[data-theme="light"] .tech-category-title {
+    color: #1a1a1a !important;
 }
 
 .skill-category ul {
@@ -1218,12 +1250,17 @@ body {
 }
 
 [data-theme="light"] .tech-item {
-    background: var(--accent-bg);
-    border: 1px solid var(--border-color);
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    color: #2d2d2d !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .tech-item:hover {
-    background: var(--hover-bg);
+    background: #f8f8f8;
+    border-color: #999999;
+    color: #1a1a1a !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive design for technologies */
@@ -2057,15 +2094,45 @@ body[data-theme="light"] .retry-btn {
     }
 }
 
+/* Touch device support for tablets and larger touch screens */
+@media (max-width: 1024px) {
+    /* Mobile touch-friendly navbar expansion for all touch devices */
+    .navbar.mobile-expanded {
+        width: 280px !important;
+        height: 52px !important;
+        padding: 6px 16px !important;
+        border-radius: 50px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .navbar.mobile-expanded .nav-left,
+    .navbar.mobile-expanded .nav-right {
+        opacity: 1 !important;
+        transform: translateX(0) scale(1) !important;
+        pointer-events: auto !important;
+    }
+    
+    .navbar.mobile-expanded .nav-container {
+        gap: 16px !important;
+    }
+    
+    .navbar.mobile-expanded .nav-links {
+        gap: 12px !important;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         padding: 6px 14px;
+        top: 15px;
+        z-index: 10000;
     }
     
     .navbar.scrolled {
         padding: 5px 10px;
         transform: translateX(-50%) scale(0.85);
+        top: 5px;
     }
     
     .nav-container {
@@ -2135,28 +2202,39 @@ body[data-theme="light"] .retry-btn {
         left: 50% !important;
         right: auto !important;
         transform: translateX(-50%) !important;
-        width: 52px !important;
+        width: 280px !important;
         max-width: none !important;
-        padding: 0 !important;
+        padding: 6px 16px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        top: 10px !important;
+        z-index: 10000 !important;
     }
     .navbar.scrolled {
         left: 50% !important;
         right: auto !important;
         transform: translateX(-50%) scale(0.9) !important;
         width: 52px !important;
-        padding: 0 !important;
+        padding: 12px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        top: 10px !important;
+        z-index: 10000 !important;
+    }
+    
+    /* Ensure mobile-expanded works at small screen sizes */
+    .navbar.mobile-expanded {
+        width: 260px !important;
+        padding: 6px 12px !important;
+        transform: translateX(-50%) !important;
     }
     
     .main-content {
-        padding: 60px 15px 0;
+        padding: 120px 15px 0;
     }
     
     .section-title {
@@ -2221,6 +2299,12 @@ body[data-theme="light"] .retry-btn {
     color: var(--text-primary);
     border: 2px solid #e8e8e8;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);
+    /* Maintain consistent centering */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
+    transform: none !important;
 }
 
 /* Light Mode cards */
@@ -2248,9 +2332,10 @@ body[data-theme="light"] .retry-btn {
 
 /* Light Mode Filter Buttons */
 [data-theme="light"] .filter-btn {
-    background: #f8f8f8;
-    color: var(--text-secondary);
-    border: 1px solid #e8e8e8;
+    background: #ffffff;
+    color: #2d2d2d;
+    border: 1px solid #d0d0d0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .filter-btn.active {
@@ -2262,10 +2347,11 @@ body[data-theme="light"] .retry-btn {
 }
 
 [data-theme="light"] .filter-btn:hover {
-    background: #f0f0f0;
-    color: var(--text-primary);
+    background: #f8f8f8;
+    color: #1a1a1a;
     border: 1px solid #999999;
     transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Light Mode Contact Methods */
@@ -2309,19 +2395,28 @@ body[data-theme="light"] .retry-btn {
 
 /* Light Mode General Text Fixes */
 [data-theme="light"] .hero-title {
-    color: var(--text-primary) !important;
+    color: #1a1a1a !important;
 }
 
 [data-theme="light"] .hero-description {
-    color: var(--text-secondary) !important;
+    color: #4a4a4a !important;
 }
 
 [data-theme="light"] .section-title {
-    color: var(--text-primary) !important;
+    color: #1a1a1a !important;
 }
 
 [data-theme="light"] .about-text {
-    color: var(--text-secondary) !important;
+    color: #4a4a4a !important;
+}
+
+[data-theme="light"] .technologies-description,
+[data-theme="light"] .projects-description {
+    color: #4a4a4a !important;
+}
+
+[data-theme="light"] .subsection-title {
+    color: #1a1a1a !important;
 }
 
 [data-theme="light"] .skill-category h3 {
@@ -2370,12 +2465,21 @@ body[data-theme="light"] .retry-btn {
     box-shadow: none;
     color: var(--text-muted);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Maintain consistent centering */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
+    transform: none !important;
 }
 
 .navbar:not(.scrolled) .nav-container {
     gap: 16px;
-    height: 40px; /* Consistent height to prevent jumping */
+    height: 44px; /* Match home button height for consistent centering */
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar:not(.scrolled) .nav-links {
@@ -2393,6 +2497,48 @@ body[data-theme="light"] .retry-btn {
     visibility: hidden;
     pointer-events: none;
 }
+
+/* Ultra-specific home button centering rules - highest priority */
+.navbar .nav-container .nav-home,
+.navbar.scrolled .nav-container .nav-home,
+.navbar.mobile-expanded .nav-container .nav-home,
+.navbar:not(.scrolled) .nav-container .nav-home,
+.navbar.scrolled:hover .nav-container .nav-home,
+.navbar.scrolled .nav-home:hover,
+[data-theme="light"] .navbar.scrolled .nav-container .nav-home,
+[data-theme="dark"] .navbar.scrolled .nav-container .nav-home {
+    /* Force absolute centering with maximum specificity */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    text-align: center !important;
+    width: 44px !important;
+    height: 44px !important;
+}
+
+/* Ensure SVG is also perfectly centered */
+.navbar .nav-home svg,
+.navbar.scrolled .nav-home svg,
+.navbar.mobile-expanded .nav-home svg,
+.navbar:not(.scrolled) .nav-home svg {
+    display: block !important;
+    margin: 0 auto !important;
+    width: 26px !important;
+    height: 26px !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+}
+
 /* Vinyl Collection Specific Styles */
 
 /* Vinyl Main Container */
@@ -2978,20 +3124,10 @@ body[data-theme="light"] .retry-btn {
     }
 }
 
-/* Mobile Home Icon Centering Fix - Improved */
-@media (max-width: 600px) {
+/* Mobile Home Icon Centering Fix - Simplified */
+@media (max-width: 480px) {
   .nav-links {
     justify-content: center !important;
   }
-  .nav-home {
-    margin: 0 !important;
-    left: auto !important;
-    right: auto !important;
-    transform: none !important;
-    position: static !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    top: 0 !important;
-  }
+  /* Remove all positioning overrides - let natural centering work */
 }
