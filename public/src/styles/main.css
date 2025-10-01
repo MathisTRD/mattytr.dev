@@ -238,6 +238,8 @@ body {
     opacity: 0;
     transform: translateY(-30px);
     transition: all 1.5s ease-in-out;
+    z-index: -1; /* Keep behind content */
+    pointer-events: none;
 }
 
 [data-theme="light"] .cloud {
@@ -281,56 +283,6 @@ body {
 }
 
 /* Sun and Moon */
-.sun {
-    position: absolute;
-    top: 8%;
-    right: 8%;
-    width: 60px;
-    height: 60px;
-    color: #0f0e0e;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(80px);
-    transition: all 1.5s ease-in-out;
-    animation: sunGlow 4s ease-in-out infinite;
-}
-
-.moon {
-    position: absolute;
-    top: 8%;
-    right: 85%;
-    width: 50px;
-    height: 50px;
-    color: #E6E6FA;
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 1.5s ease-in-out;
-    animation: moonGlow 6s ease-in-out infinite;
-}
-
-[data-theme="light"] .sun {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-[data-theme="light"] .moon {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(80px);
-}
-
-@keyframes sunGlow {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(0) scale(1.05); }
-}
-
-@keyframes moonGlow {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(0) scale(1.02); }
-}
-
 /* Navigation */
 .navbar {
     position: fixed;
