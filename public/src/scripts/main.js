@@ -587,7 +587,8 @@ class GitHubPortfolio {
                 return scoreB - scoreA;
             });
             
-            const knownPinned = ['LetsGoDeeperV2', 'mattytr.dev'];
+            const knownPinned = ['LetsGoDeeperV2', 'mattytr.dev', 'photography-portfolio'
+            ];
             const pinnedRepos = this.repositories.filter(repo => knownPinned.includes(repo.name));
             
             return pinnedRepos.length > 0 ? pinnedRepos : sortedRepos.slice(0, 3);
@@ -712,8 +713,15 @@ class GitHubPortfolio {
     }
 
     generateHoverOverlayHTML(repo) {
-        const websiteButton = repo.homepage ? `
-            <a href="${repo.homepage}" target="_blank" class="project-action-btn" title="Visit Website">
+        // Special-case override for projects that should link to a specific website
+        let homepage = repo.homepage;
+
+        if (repo.name === 'photography-portfolio') {
+            homepage = 'https://mathisheck.de';
+        }
+
+        const websiteButton = homepage ? `
+            <a href="${homepage}" target="_blank" class="project-action-btn" title="Visit Website">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
                 </svg>

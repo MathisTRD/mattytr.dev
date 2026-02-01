@@ -1281,6 +1281,11 @@ body {
     background: var(--card-bg);
 }
 
+/* Make photography portfolio screenshot fill the entire card */
+.project-image img[src*="photography-portfolio"] {
+    object-fit: cover;
+}
+
 /* Project placeholder for repos without images */
 .project-placeholder {
     display: flex;
